@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-import model.DBManager;
+import model.ConnectDB;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,9 +19,9 @@ public class LoadDBUI extends JFrame {
 	private JTextField databaseField;
 	
 	MainUI mainUI;
-	DBManager dbConnection;
+	ConnectDB dbConnection;
 	
-	public LoadDBUI(MainUI mainUI, DBManager dbConnection) {
+	public LoadDBUI(MainUI mainUI, ConnectDB dbConnection) {
 		this.mainUI = mainUI;
 		setSize(400, 220);
 		setResizable(false);

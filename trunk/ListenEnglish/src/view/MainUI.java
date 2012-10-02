@@ -25,14 +25,14 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 
-import model.DBManager;
+import model.ConnectDB;
 import model.Lession;
 import model.User;
 
 public class MainUI extends JFrame {
 	User currentUser;
 	Lession lession[][];	
-	DBManager dbConnector;
+	ConnectDB dbConnector;
 	
 	WelcomePanel welcome;
 	ChooseLevelPanel chooseLevelPanel;
@@ -51,7 +51,7 @@ public class MainUI extends JFrame {
 	}
 	
 	public MainUI() {
-		dbConnector = new DBManager();
+		dbConnector = new ConnectDB();
 		lession = new Lession[3][];
 		lession[0] = dbConnector.getLessionByLevel(1);
 		lession[1] = dbConnector.getLessionByLevel(2);
