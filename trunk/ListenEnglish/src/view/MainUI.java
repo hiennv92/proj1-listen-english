@@ -29,12 +29,9 @@ import model.DBManager;
 import model.Lession;
 import model.User;
 
-
-
-
 public class MainUI extends JFrame {
 	User currentUser;
-	Lession lession[][];
+	Lession lession[][];	
 	DBManager dbConnector;
 	
 	WelcomePanel welcome;
@@ -154,7 +151,7 @@ public class MainUI extends JFrame {
 			User user = dbConnector.userAvaiable(accountField.getText());
 			if(user == null)
 				JOptionPane.showMessageDialog(this, "Create an account, please !!!");
-			else if(!user.userPass.equals(passwordField.getText()))
+			else if(!user.userPass.equals(String.copyValueOf(passwordField.getPassword())))
 				JOptionPane.showMessageDialog(this, "Wrong information !!!");
 			else{
 				welcome.setVisible(false);
@@ -273,7 +270,11 @@ public class MainUI extends JFrame {
 			
 			userScorePanel = new JPanel();
 			
-			userScoreList = new JList(userScore);
+			if(userScore != null)
+				userScoreList = new JList(userScore);
+			else
+				userScoreList = new JList();
+			
 			userScoreList.setFont(new Font("consolas", Font.PLAIN, 14));
 			userScoreList.setVisibleRowCount(3);
 			add(userScoreList);
@@ -288,7 +289,10 @@ public class MainUI extends JFrame {
 			lblUserScore.setBounds(103, 24, 82, 14);
 			add(lblUserScore);
 			
-			topScoreList = new JList(topScore);
+			if(topScore != null)
+				topScoreList = new JList(topScore);
+			else
+				topScoreList = new JList();
 			topScoreList.setFont(new Font("consolas", Font.PLAIN, 14));
 			add(topScoreList);
 			
@@ -300,6 +304,8 @@ public class MainUI extends JFrame {
 			lblTopScore = new JLabel("Top score");
 			lblTopScore.setBounds(444, 24, 75, 14);
 			add(lblTopScore);
+			
+			
 		}
 	}
 	
