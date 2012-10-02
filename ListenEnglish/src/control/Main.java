@@ -3,7 +3,7 @@ package control;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import model.DBManager;
+import model.ConnectDB;
 
 
 import view.MainUI;
