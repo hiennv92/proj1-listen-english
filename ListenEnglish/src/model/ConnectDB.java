@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DBManager {
+public class ConnectDB {
 	private Connection connect;
 	private Statement state;
 	private Statement state_2;
@@ -17,7 +17,7 @@ public class DBManager {
 	private String userDB = "root";
 	private String passDB = "12345";
 	
-	public DBManager(){
+	public ConnectDB(){
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			connect = DriverManager.getConnection(url, userDB, passDB);
