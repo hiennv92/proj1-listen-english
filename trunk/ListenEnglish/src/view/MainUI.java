@@ -26,13 +26,15 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 
 import model.ConnectDB;
-import model.Lession;
-import model.User;
+import model.Lessions;
+import model.Users;
+import DBManager.LessionDB;
+import DBManager.ListenDB;
+import DBManager.UserDB;
 
 public class MainUI extends JFrame {
-	User currentUser;
-	Lession lession[][];	
-	ConnectDB dbConnector;
+	Users currentUser;
+	Lessions lession[][];	
 	
 	WelcomePanel welcome;
 	ChooseLevelPanel chooseLevelPanel;
@@ -51,11 +53,13 @@ public class MainUI extends JFrame {
 	}
 	
 	public MainUI() {
-		dbConnector = new ConnectDB();
-		lession = new Lession[3][];
-		lession[0] = dbConnector.getLessionByLevel(1);
-		lession[1] = dbConnector.getLessionByLevel(2);
-		lession[2] = dbConnector.getLessionByLevel(3);
+		ConnectDB.initInfor("root", "12345", "127.0.0.1", "3306", "listeningenglish");
+		ConnectDB.connect();
+		
+		lession = new Lessions[3][];
+		lession[0] = LessionDB.getLessionByLevel(1);
+		lession[1] = LessionDB.getLessionByLevel(2);
+		lession[2] = LessionDB.getLessionByLevel(3);
 		
 		getContentPane().setLayout(new CardLayout(0, 0));
 		
@@ -148,23 +152,23 @@ public class MainUI extends JFrame {
 		}
 	
 		public void eventLogin(ActionEvent e){
-			User user = dbConnector.userAvaiable(accountField.getText());
+			Users user = UserDB.getUserByName(accountField.getText());
 			if(user == null)
-				JOptionPane.showMessageDialog(this, "Create an account, please !!!");
-			else if(!user.userPass.equals(String.copyValueOf(passwordField.getPassword())))
+				JOptionPane.showMessageDialog(this, "Wrong information !!!");
+			else if(!user.getPassword().equals(String.copyValueOf(passwordField.getPassword())))
 				JOptionPane.showMessageDialog(this, "Wrong information !!!");
 			else{
 				welcome.setVisible(false);
 				tabbedPane.setVisible(true);
 				currentUser = user;
-				// Bay gio moi khoi tao duoc scorePanel
+/////////////// Bay gio moi khoi tao duoc scorePanel
 				scorePanel = new ScorePanel();
 				tabbedPane.addTab("High Score", null, scorePanel, null);
 			}
 		}
 		
 		public void eventSignup(ActionEvent e){
-			User user = dbConnector.userAvaiable(accountField.getText());
+			Users user = UserDB.getUserByName(accountField.getText());
 			if(user != null)
 				JOptionPane.showMessageDialog(this, "Account avaiable !!!");
 			else if(accountField.getText().equals(""))
@@ -172,10 +176,10 @@ public class MainUI extends JFrame {
 			else if(passwordField.getText().equals(""))
 				JOptionPane.showMessageDialog(this, "Insert your password !!!");
 			else{
-				dbConnector.insertUser(accountField.getText(), passwordField.getText());
+				UserDB.insertUser(new Users(0, passwordField.getText(), accountField.getText()));
 				welcome.setVisible(false);
 				tabbedPane.setVisible(true);
-				currentUser = dbConnector.userAvaiable(accountField.getText());
+				currentUser = UserDB.getUserByName(accountField.getText());
 				// Bay gio moi khoi tao duoc scorePanel
 				scorePanel = new ScorePanel();
 				tabbedPane.addTab("High Score", null, scorePanel, null);
@@ -210,8 +214,9 @@ public class MainUI extends JFrame {
 				listLV[i] = new String[lession[i].length + 2];
 				listLV[i][0] = String.format("   %-50s%s", "Lession", "Length");
 				listLV[i][1] = "----------------------------------------------------------------";
-				for(int j = 2; j < listLV[i].length; j++)
+				for(int j = 2; j < listLV[i].length; j++){
 					listLV[i][j] = lession[i][j - 2].toString();
+				}
 			}
 			
 			setBounds(10, 11, 609, 412);
@@ -263,8 +268,8 @@ public class MainUI extends JFrame {
 		
 		public ScorePanel(){
 			
-			userScore = dbConnector.getTopScoreByUser(currentUser.userID);
-			topScore = dbConnector.getTopScore();
+			userScore = ListenDB.getTopScoreByUser(currentUser.getID());
+			topScore = ListenDB.getTopScore();
 			
 			setLayout(null);
 			
