@@ -1,10 +1,19 @@
 package model;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class ConnectDB {
 	private static Connection conn;
@@ -92,4 +101,49 @@ public class ConnectDB {
 	public static void setPort(String _port){
 		port = _port;
 	}
+	
+	/**
+	 * Doc du lieu ket noi toi co so du lieu
+	 * Suu tam :)
+	 */
+    public static void readConfig() {
+        try {
+            File fXmlFile = new File("config.xml");
+            if (fXmlFile.exists()) {
+                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(fXmlFile);
+                doc.getDocumentElement().normalize();
+
+                NodeList nList = doc.getElementsByTagName("connection");
+
+                for (int temp = 0; temp < nList.getLength(); temp++) {
+
+                    Node nNode = nList.item(temp);
+                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                        Element eElement = (Element) nNode;
+
+                        host = getTagValue("hostname", eElement);
+                        port = getTagValue("port", eElement);
+                        user = getTagValue("username", eElement);
+                        password = getTagValue("password", eElement);
+                        database = getTagValue("database", eElement);
+
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Lay gia tri theo tag name
+    private static String getTagValue(String sTag, Element eElement) {
+        NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+
+        Node nValue = (Node) nlList.item(0);
+
+        return nValue.getNodeValue();
+    }
 }
