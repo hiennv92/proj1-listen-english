@@ -21,6 +21,7 @@ public class PlayAudio {
 	/**
 	 * Danh sach cac duong dan can play
 	 */
+	Lessions lesson;
 	Tracks[] listTracks;// Danh sach cac track
 	MediaPlayer mediaPlayer;
 	Media media;		
@@ -30,6 +31,7 @@ public class PlayAudio {
 					// false neu dang pause
 	
 	public PlayAudio(Lessions les){
+		this.lesson = les;
 		this.listTracks = les.getTrack();
 		// Khoi tao currentTrack
 		currentTrack = 0;
@@ -40,15 +42,26 @@ public class PlayAudio {
 		
 		media = new Media((new File(listTracks[currentTrack].getAudioFile())).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setCycleCount(1000000);
 		
 		Platform.runLater(new Runnable() {
             @Override
             public void run() {
-            	mediaPlayer.pause();
+            	synchronized (mediaPlayer) {
+            		mediaPlayer.pause();
+				}
             }
    	 	});
 	}
 	
+	public Lessions getLesson() {
+		return lesson;
+	}
+
+	public void setLesson(Lessions lesson) {
+		this.lesson = lesson;
+	}
+
 	public PlayAudio(Tracks[] listPath){
 		this.listTracks = listPath;
 		// Khoi tao currentTrack
@@ -69,6 +82,8 @@ public class PlayAudio {
 				}
             }
    	 	});
+		
+		mediaPlayer.onEndOfMediaProperty();
 	}
 	
 	public boolean getState() {
@@ -94,6 +109,10 @@ public class PlayAudio {
 
 	public void setListPath(Tracks[] listPath) {
 		this.listTracks = listPath;
+	}
+	
+	public Tracks getCurrentTrack(){
+		return listTracks[currentTrack];
 	}
 	
 	public boolean next(){
@@ -139,21 +158,27 @@ public class PlayAudio {
 	public void setCurrentTime(int miliseconds){
 		Duration current = new Duration(miliseconds);
 		synchronized(mediaPlayer){
-			mediaPlayer.setStartTime(current);
+			mediaPlayer.seek(current);
 		}
 	}
 	
-	public double getVolumn(){
-		double volume = 0;
+	public int getVolumn(){
+		int volume = 0;
 		synchronized(mediaPlayer){
-			volume = mediaPlayer.getVolume();
+			volume = (int)mediaPlayer.getVolume() * 100;
 		}
 		return volume;
 	}
 	
-	public void setVolume(double volume){
+	public void setVolume(int volume){
 		synchronized(mediaPlayer){
-			mediaPlayer.setVolume(volume);
+			mediaPlayer.setVolume(volume * 1.0 / 100);
+		}
+	}
+	
+	public void stop(){
+		synchronized(mediaPlayer){
+			mediaPlayer.stop();
 		}
 	}
 }

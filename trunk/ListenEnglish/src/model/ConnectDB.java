@@ -32,6 +32,13 @@ public class ConnectDB {
 		database = _database;
 	}
 	
+	/**
+	 * Tien hanh truy cap vao mot co so du lieu
+	 * phuong thuc nay se lam o ngay dau tien cua chuong trinh
+	 * nham lay duoc doi tuong conn
+	 * de phuc vu cho phuong thuc getConnect
+	 * @return
+	 */
 	public static boolean connect(){
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
