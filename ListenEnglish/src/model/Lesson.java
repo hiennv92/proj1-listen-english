@@ -1,17 +1,15 @@
 package model;
 
-import javax.sound.midi.Track;
-
 import Utility.Utility;
 
 public class Lesson {
 	private int id;
 	private String name;
 	private int level;
-	private Tracks[] listTrack;
+	private Track[] listTrack;
 	private int length;
 	
-	public Lesson(int id, String name, int level, Tracks[] listTrack){
+	public Lesson(int id, String name, int level, Track[] listTrack){
 		this.id = id;
 		this.name = name;
 		this.level = level;
@@ -34,7 +32,7 @@ public class Lesson {
 		return this.level;
 	}
 	
-	public Tracks[] getTrack(){
+	public Track[] getTrack(){
 		return this.listTrack;
 	}
 	

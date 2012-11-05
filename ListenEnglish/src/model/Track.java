@@ -1,13 +1,13 @@
 package model;
 
-public class Tracks {
+public class Track {
 	private int id;
 	private int length;
 	private String audioFile;
 	private String scriptFile;
 	private String suggest;
 	
-	public Tracks(int id, int length, String audioFile, String scriptFile, String suggest){
+	public Track(int id, int length, String audioFile, String scriptFile, String suggest){
 		this.id =id;
 		this.length = length;
 		this.audioFile = audioFile;
