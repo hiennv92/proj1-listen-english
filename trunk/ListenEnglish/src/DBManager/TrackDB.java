@@ -4,11 +4,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import model.ConnectDB;
-import model.Tracks;
+import model.Track;
 
 public class TrackDB {
-	public static Tracks getTrackByID(int id){
-		Tracks track = null;
+	public static Track getTrackByID(int id){
+		Track track = null;
 		try{
 			Statement state = ConnectDB.getConnect().createStatement();
 			String query = String.format("SELECT * FROM track WHERE id = %d", id);
@@ -21,7 +21,7 @@ public class TrackDB {
 				String _scriptFile = results.getString(4);
 				String _suggest = results.getString(5);
 				
-				track = new Tracks(_id, _length, _audioFile, _scriptFile, _suggest);
+				track = new Track(_id, _length, _audioFile, _scriptFile, _suggest);
 			}
 		} catch (Exception e){
 			e.printStackTrace();
@@ -32,9 +32,9 @@ public class TrackDB {
 		return track;
 	}
 	
-	public static Tracks[] getTrackByLessionID(int lessID){
-		Tracks[] tracks = null;
-		Tracks track;
+	public static Track[] getTrackByLessionID(int lessID){
+		Track[] tracks = null;
+		Track track;
 		
 		try{
 			Statement state = ConnectDB.getConnect().createStatement();
@@ -47,7 +47,7 @@ public class TrackDB {
 			if(count == 0)
 				return null;
 			
-			tracks = new Tracks[count];
+			tracks = new Track[count];
 			
 			String query = String.format("SELECT * FROM track WHERE lessID = %d", lessID);
 			results = state.executeQuery(query);
@@ -61,7 +61,7 @@ public class TrackDB {
 				String _scriptFile = results.getString(4);
 				String _suggest = results.getString(5);
 				
-				track = new Tracks(_id, _length, _audioFile, _scriptFile, _suggest);
+				track = new Track(_id, _length, _audioFile, _scriptFile, _suggest);
 				tracks[i] = track;
 				i++;
 			}
