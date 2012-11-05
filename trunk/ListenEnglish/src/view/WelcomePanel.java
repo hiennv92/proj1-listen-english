@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import model.Users;
+import model.User;
 import DBManager.UserDB;
 
 public class WelcomePanel extends JPanel{
@@ -87,7 +87,7 @@ public class WelcomePanel extends JPanel{
 	}
 
 	public void clickLogin(ActionEvent e){
-		Users user = UserDB.getUserByName(accountField.getText());
+		User user = UserDB.getUserByName(accountField.getText());
 		if(user == null)
 			JOptionPane.showMessageDialog(this, "Wrong information !!!");
 		else if(!user.getPassword().equals(String.copyValueOf(passwordField.getPassword())))
@@ -105,7 +105,7 @@ public class WelcomePanel extends JPanel{
 	}
 	
 	public void clickSignup(ActionEvent e){
-		Users user = UserDB.getUserByName(accountField.getText());
+		User user = UserDB.getUserByName(accountField.getText());
 		if(user != null)
 			JOptionPane.showMessageDialog(this, "Account avaiable !!!");
 		else if(accountField.getText().equals(""))
@@ -113,7 +113,7 @@ public class WelcomePanel extends JPanel{
 		else if(passwordField.getText().equals(""))
 			JOptionPane.showMessageDialog(this, "Insert your password !!!");
 		else{
-			UserDB.insertUser(new Users(0, passwordField.getText(), accountField.getText()));
+			UserDB.insertUser(new User(0, passwordField.getText(), accountField.getText()));
 			mainUI.getWelcome().setVisible(false);
 			mainUI.getTabbedPane().setVisible(true);
 			mainUI.setCurrentUser(UserDB.getUserByName(accountField.getText()));
