@@ -4,12 +4,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import model.ConnectDB;
-import model.Tracks;
-import model.Users;
+import model.Track;
+import model.User;
 
 public class UserDB {
-	public static Users getUserByID(int id){
-		Users user = null;
+	public static User getUserByID(int id){
+		User user = null;
 		
 		try{
 			Statement state = ConnectDB.getConnect().createStatement();
@@ -21,7 +21,7 @@ public class UserDB {
 				String _password = results.getString(2);
 				String _username = results.getString(3);
 				
-				user = new Users(_id, _password, _username);
+				user = new User(_id, _password, _username);
 			}
 		} catch (Exception e){
 			e.printStackTrace();
@@ -32,8 +32,8 @@ public class UserDB {
 		return user;
 	}
 	
-	public static Users getUserByName(String name){
-		Users user = null;
+	public static User getUserByName(String name){
+		User user = null;
 		
 		try{
 			Statement state = ConnectDB.getConnect().createStatement();
@@ -45,7 +45,7 @@ public class UserDB {
 				String _password = results.getString(2);
 				String _username = results.getString(3);
 				
-				user = new Users(_id, _password, _username);
+				user = new User(_id, _password, _username);
 			}
 		} catch (Exception e){
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class UserDB {
 		return user;
 	}
 	
-	public static boolean insertUser(Users user){
+	public static boolean insertUser(User user){
 		boolean ok = false;
 		
 		try{
@@ -76,7 +76,7 @@ public class UserDB {
 		return ok;
 	}
 	
-	public static boolean updateUser(Users old, Users last){
+	public static boolean updateUser(User old, User last){
 		boolean ok = false;
 		
 		try{
