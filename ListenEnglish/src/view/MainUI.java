@@ -9,11 +9,11 @@ import javax.swing.UIManager;
 
 import model.ConnectDB;
 import model.Lesson;
-import model.Users;
+import model.User;
 import DBManager.LessonDB;
 
 public class MainUI extends JFrame {
-	private Users currentUser;
+	private User currentUser;
 	private Lesson lessons[][];
 	private WelcomePanel welcome;
 	private ChooseLevelPanel chooseLevelPanel;
@@ -68,11 +68,11 @@ public class MainUI extends JFrame {
 		setResizable(false);
 	}
 
-	public Users getCurrentUser() {
+	public User getCurrentUser() {
 		return currentUser;
 	}
 
-	public void setCurrentUser(Users currentUser) {
+	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
 
@@ -80,15 +80,15 @@ public class MainUI extends JFrame {
 		return lessons;
 	}
 	
-	public Lesson[] getLessions(int i) {
+	public Lesson[] getLessons(int i) {
 		return lessons[i];
 	}
 	
-	public Lesson getLession(int i, int j) {
+	public Lesson getLesson(int i, int j) {
 		return lessons[i][j];
 	}
 
-	public void setLession(Lesson[][] lession) {
+	public void setLesson(Lesson[][] lession) {
 		this.lessons = lession;
 	}
 

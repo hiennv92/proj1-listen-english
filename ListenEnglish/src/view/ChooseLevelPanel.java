@@ -40,11 +40,11 @@ public class ChooseLevelPanel extends JPanel{
 		
 		// Dua du lieu vao listLV
 		for(int i = 0; i < 3; i++){
-			listLV[i] = new String[mainUI.getLessions(i).length + 2];
+			listLV[i] = new String[mainUI.getLessons(i).length + 2];
 			listLV[i][0] = String.format("   %-50s%s", "Lession", "Length");
 			listLV[i][1] = "----------------------------------------------------------------";
 			for(int j = 2; j < listLV[i].length; j++){
-				listLV[i][j] = mainUI.getLession(i, j - 2).toString();
+				listLV[i][j] = mainUI.getLesson(i, j - 2).toString();
 			}
 		}
 		
@@ -107,7 +107,7 @@ public class ChooseLevelPanel extends JPanel{
 		if(lessonOrder < 0)
 			return;
 		
-		mainUI.getListenPanel().setPlayer(new PlayAudio(mainUI.getLession(tab, lessonOrder)));
+		mainUI.getListenPanel().setPlayer(new PlayAudio(mainUI.getLesson(tab, lessonOrder)));
 		mainUI.getChooseLevelPanel().setVisible(false);
 		mainUI.getListenPanel().setVisible(true);
 	}
