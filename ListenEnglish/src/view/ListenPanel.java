@@ -27,7 +27,7 @@ public class ListenPanel extends JPanel{
 	private JTextArea inputArea;
 	private JButton btnExit;
 	private JButton btnLogout;
-	private JButton btnOtherLession;
+	private JButton btnOtherLesson;
 	private JLabel lblTotalTime;
 	private JButton playPauseButton;
 	private JButton nextButton;
@@ -136,9 +136,9 @@ public class ListenPanel extends JPanel{
 		});
 		add(btnLogout);
 		
-		btnOtherLession = new JButton("Other Lession");
-		btnOtherLession.setBounds(176, 378, 131, 23);
-		btnOtherLession.addActionListener(new ActionListener(){
+		btnOtherLesson = new JButton("Other Lession");
+		btnOtherLesson.setBounds(176, 378, 131, 23);
+		btnOtherLesson.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -146,7 +146,7 @@ public class ListenPanel extends JPanel{
 			}
 			
 		});
-		add(btnOtherLession);
+		add(btnOtherLesson);
 		
 		lblTotalTime = new JLabel("Total Time : ");
 		lblTotalTime.setFont(new Font("Tahoma", Font.PLAIN, 17));

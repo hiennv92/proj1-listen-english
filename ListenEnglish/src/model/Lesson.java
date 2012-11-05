@@ -2,14 +2,16 @@ package model;
 
 import javax.sound.midi.Track;
 
-public class Lessions {
+import Utility.Utility;
+
+public class Lesson {
 	private int id;
 	private String name;
 	private int level;
 	private Tracks[] listTrack;
 	private int length;
 	
-	public Lessions(int id, String name, int level, Tracks[] listTrack){
+	public Lesson(int id, String name, int level, Tracks[] listTrack){
 		this.id = id;
 		this.name = name;
 		this.level = level;
@@ -46,6 +48,6 @@ public class Lessions {
 		for(int i =0; i < listTrack.length; i++)
 			length += listTrack[i].getLength();
 
-		return String.format("   %-50s%-3d (s)", name, length);
+		return String.format("   %-50s%s", name, Utility.convertToTime(length / 1000));
 	}
 }

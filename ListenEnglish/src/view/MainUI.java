@@ -8,15 +8,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
 import model.ConnectDB;
-import model.Lessions;
+import model.Lesson;
 import model.Users;
-import DBManager.LessionDB;
+import DBManager.LessonDB;
 
 public class MainUI extends JFrame {
 	private Users currentUser;
-	private Lessions lession[][];
-	private Lessions currentLession;
-	
+	private Lesson lessons[][];
 	private WelcomePanel welcome;
 	private ChooseLevelPanel chooseLevelPanel;
 	private ScorePanel scorePanel;
@@ -39,10 +37,10 @@ public class MainUI extends JFrame {
 		// ket noi vao co so du lieu
 		ConnectDB.connect();
 		
-		lession = new Lessions[3][];
-		lession[0] = LessionDB.getLessionByLevel(1);
-		lession[1] = LessionDB.getLessionByLevel(2);
-		lession[2] = LessionDB.getLessionByLevel(3);
+		lessons = new Lesson[3][];
+		lessons[0] = LessonDB.getLessonByLevel(1);
+		lessons[1] = LessonDB.getLessonByLevel(2);
+		lessons[2] = LessonDB.getLessonByLevel(3);
 		
 		getContentPane().setLayout(new CardLayout(0, 0));
 		
@@ -78,20 +76,20 @@ public class MainUI extends JFrame {
 		this.currentUser = currentUser;
 	}
 
-	public Lessions[][] getLession() {
-		return lession;
+	public Lesson[][] getLessions() {
+		return lessons;
 	}
 	
-	public Lessions[] getLession(int i) {
-		return lession[i];
+	public Lesson[] getLessions(int i) {
+		return lessons[i];
 	}
 	
-	public Lessions getLession(int i, int j) {
-		return lession[i][j];
+	public Lesson getLession(int i, int j) {
+		return lessons[i][j];
 	}
 
-	public void setLession(Lessions[][] lession) {
-		this.lession = lession;
+	public void setLession(Lesson[][] lession) {
+		this.lessons = lession;
 	}
 
 	public WelcomePanel getWelcome() {
