@@ -74,6 +74,7 @@ public class WelcomePanel extends JPanel{
 			}
 		});
 		add(btnLogin);
+		mainUI.getRootPane().setDefaultButton(btnLogin);
 		
 		btnSignup = new JButton("SIGNUP");
 		btnSignup.setBounds(310, 302, 91, 23);
