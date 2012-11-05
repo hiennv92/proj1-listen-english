@@ -8,7 +8,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import model.Lesson;
-import model.Tracks;
+import model.Track;
 
 import java.io.File;
 
@@ -22,7 +22,7 @@ public class PlayAudio {
 	 * Danh sach cac duong dan can play
 	 */
 	Lesson lesson;
-	Tracks[] listTracks;// Danh sach cac track
+	Track[] listTracks;// Danh sach cac track
 	MediaPlayer mediaPlayer;
 	Media media;		
 	int currentTrack;	// So thu tu cua Track hien dang phat
@@ -62,7 +62,7 @@ public class PlayAudio {
 		this.lesson = lesson;
 	}
 
-	public PlayAudio(Tracks[] listPath){
+	public PlayAudio(Track[] listPath){
 		this.listTracks = listPath;
 		// Khoi tao currentTrack
 		currentTrack = 0;
@@ -103,15 +103,15 @@ public class PlayAudio {
 			}
 	}
 	
-	public Tracks[] getListPath() {
+	public Track[] getListPath() {
 		return listTracks;
 	}
 
-	public void setListPath(Tracks[] listPath) {
+	public void setListPath(Track[] listPath) {
 		this.listTracks = listPath;
 	}
 	
-	public Tracks getCurrentTrack(){
+	public Track getCurrentTrack(){
 		return listTracks[currentTrack];
 	}
 	
