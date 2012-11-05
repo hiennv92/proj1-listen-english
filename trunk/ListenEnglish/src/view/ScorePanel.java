@@ -12,18 +12,18 @@ import javax.swing.border.TitledBorder;
 import DBManager.ListenDB;
 
 public class ScorePanel extends JPanel{
-	JPanel userScorePanel;
-	JPanel topScorePanel;
-	JList userScoreList;
-	JList topScoreList;
-	JScrollPane listScrollPaneUser;
-	JScrollPane listScrollPaneTop;
-	JLabel lblUserScore;
-	JLabel lblTopScore;
-	String userScore[];
-	String topScore[];
+	private JPanel userScorePanel;
+	private JPanel topScorePanel;
+	private JList userScoreList;
+	private JList topScoreList;
+	private JScrollPane listScrollPaneUser;
+	private JScrollPane listScrollPaneTop;
+	private JLabel lblUserScore;
+	private JLabel lblTopScore;
+	private String userScore[];
+	private String topScore[];
 	
-	MainUI mainUI;
+	private MainUI mainUI;
 	
 	public ScorePanel(MainUI mainUI){
 		this.mainUI = mainUI;

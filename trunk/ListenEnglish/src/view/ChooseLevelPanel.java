@@ -16,17 +16,17 @@ import javax.swing.border.TitledBorder;
 import audio.PlayAudio;
 
 public class ChooseLevelPanel extends JPanel{
-	JTabbedPane chooseLevelTab;
-	JButton testButton;
-	JButton listenButton;
+	private JTabbedPane chooseLevelTab;
+	private JButton testButton;
+	private JButton listenButton;
 	
-	JPanel panelLevel[];
-	JList listLevel[];
-	JScrollPane scrollLevel[];
-	String listLV[][];
+	private JPanel panelLevel[];
+	private JList listLevel[];
+	private JScrollPane scrollLevel[];
+	private String listLV[][];
 	
-	JScrollPane scrollLevel2;
-	JScrollPane scrollLevel3;
+	private JScrollPane scrollLevel2;
+	private JScrollPane scrollLevel3;
 	
 	MainUI mainUI;
 	
@@ -40,7 +40,7 @@ public class ChooseLevelPanel extends JPanel{
 		
 		// Dua du lieu vao listLV
 		for(int i = 0; i < 3; i++){
-			listLV[i] = new String[mainUI.getLession(i).length + 2];
+			listLV[i] = new String[mainUI.getLessions(i).length + 2];
 			listLV[i][0] = String.format("   %-50s%s", "Lession", "Length");
 			listLV[i][1] = "----------------------------------------------------------------";
 			for(int j = 2; j < listLV[i].length; j++){

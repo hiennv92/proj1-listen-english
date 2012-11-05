@@ -7,7 +7,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import model.Lessions;
+import model.Lesson;
 import model.Tracks;
 
 import java.io.File;
@@ -21,7 +21,7 @@ public class PlayAudio {
 	/**
 	 * Danh sach cac duong dan can play
 	 */
-	Lessions lesson;
+	Lesson lesson;
 	Tracks[] listTracks;// Danh sach cac track
 	MediaPlayer mediaPlayer;
 	Media media;		
@@ -30,7 +30,7 @@ public class PlayAudio {
 					// true neu dang phat
 					// false neu dang pause
 	
-	public PlayAudio(Lessions les){
+	public PlayAudio(Lesson les){
 		this.lesson = les;
 		this.listTracks = les.getTrack();
 		// Khoi tao currentTrack
@@ -54,11 +54,11 @@ public class PlayAudio {
    	 	});
 	}
 	
-	public Lessions getLesson() {
+	public Lesson getLesson() {
 		return lesson;
 	}
 
-	public void setLesson(Lessions lesson) {
+	public void setLesson(Lesson lesson) {
 		this.lesson = lesson;
 	}
 

@@ -18,8 +18,8 @@ public class LoadDBUI extends JFrame {
 	private JTextField passField;
 	private JTextField databaseField;
 	
-	MainUI mainUI;
-	ConnectDB dbConnection;
+	private MainUI mainUI;
+	private ConnectDB dbConnection;
 	
 	public LoadDBUI(MainUI mainUI, ConnectDB dbConnection) {
 		this.mainUI = mainUI;
