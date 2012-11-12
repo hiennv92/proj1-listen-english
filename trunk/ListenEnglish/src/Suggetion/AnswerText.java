@@ -23,6 +23,7 @@ public class AnswerText {
     public void setAnswer(String answer)
     {
         this.answer = answer;
+        System.out.println("dap an"+answer);
         this.words = this.answer.split(" ");
         reset();
     }
@@ -46,23 +47,22 @@ public class AnswerText {
 //            System.out.println("het cau"+words)
             return SENTENCE_DONE;   // het cau
         }
-//        System.out.println(""+words.length);
-        if (words[count_word].charAt(count_char) == c)
+        
+        if (Character.toLowerCase(words[count_word].charAt(count_char)) == Character.toLowerCase(c) )
         {
-            correct_chars = correct_chars+c;
+            correct_chars = correct_chars+words[count_word].charAt(count_char);
             ++count_char;
             if (correct_chars.equals(words[count_word]))
             {
+            	if (count_word == words.length - 1)
+            	{ 
+            		return SENTENCE_DONE;
+            	}
+            	System.out.println("het tu");
+            	correct_chars += " ";
                 return WORD_DONE;
             }
-            char chr;
-            if ((chr = words[count_word].charAt(count_char)) == ',' ||
-            	chr == '.'	||
-            	chr == '!')
-            {
-            	correct_chars += chr;
-            	return WORD_DONE;
-            }
+            
                // 
             return CHAR_CORRECT;
         }
@@ -86,8 +86,9 @@ public class AnswerText {
         return true;
     }
     
-    public final int SENTENCE_DONE = 1;
-    public final int WORD_DONE = 2;
-    public final int WORD_FAIL = 3;
-    public final int CHAR_CORRECT = 4;
+    public static final int SENTENCE_DONE = 1;
+    public static final int WORD_DONE = 2;
+    public static final int WORD_FAIL = 3;
+    public static final int CHAR_CORRECT = 4;
+    public static final int END_SCRIPT = 5;
 }
