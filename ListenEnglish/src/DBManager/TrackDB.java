@@ -59,7 +59,7 @@ public class TrackDB {
 				int _length = results.getInt(2);
 				String _audioFile = results.getString(3);
 				String _scriptFile = results.getString(4);
-				String _suggest = results.getString(5);
+				String _suggest = results.getString(6);
 				
 				track = new Track(_id, _length, _audioFile, _scriptFile, _suggest);
 				tracks[i] = track;
