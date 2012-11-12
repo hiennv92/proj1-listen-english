@@ -38,8 +38,6 @@ public class AnswerText {
         return this.answer;
     }
     
-    
-    
     public int checkChar(char c)
     {
         if (words.length <= count_word)

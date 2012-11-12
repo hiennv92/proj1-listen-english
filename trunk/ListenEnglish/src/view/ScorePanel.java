@@ -58,6 +58,7 @@ public class ScorePanel extends JPanel{
 			topScoreList = new JList(topScore);
 		else
 			topScoreList = new JList();
+		
 		topScoreList.setFont(new Font("consolas", Font.PLAIN, 14));
 		add(topScoreList);
 		
@@ -69,7 +70,15 @@ public class ScorePanel extends JPanel{
 		lblTopScore = new JLabel("Top score");
 		lblTopScore.setBounds(444, 24, 75, 14);
 		add(lblTopScore);
+	}
+	
+	public void refreshScore(){
+		userScore = ListenDB.getTopScoreByUser(mainUI.getCurrentUser().getID());
+		topScore = ListenDB.getTopScore();
 		
-		
+		if(userScore != null)
+			userScoreList.setListData(userScore);
+		if(topScore != null)
+			topScoreList.setListData(topScore);
 	}
 }

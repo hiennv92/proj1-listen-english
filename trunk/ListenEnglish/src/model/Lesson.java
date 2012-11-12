@@ -16,7 +16,7 @@ public class Lesson {
 		this.listTrack = listTrack;
 		this.length = 0;
 		
-		for(int i =0; i < listTrack.length; i++)
+		for(int i = 0; i < listTrack.length; i++)
 			length += listTrack[i].getLength();
 	}
 	
@@ -37,7 +37,7 @@ public class Lesson {
 	}
 	
 	public int getLength(){
-		return listTrack.length;
+		return length;
 	}
 	
 	public String toString(){

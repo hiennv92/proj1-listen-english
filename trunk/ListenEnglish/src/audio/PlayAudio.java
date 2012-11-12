@@ -8,8 +8,8 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import model.Lessions;
-import model.Tracks;
+import model.Lesson;
+import model.Track;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,8 +27,6 @@ import java.nio.file.WatchService;
 import java.nio.file.WatchEvent.Kind;
 import java.nio.file.WatchEvent.Modifier;
 
-import com.sun.media.jfxmedia.track.Track;
-
 /**
  * Dung de chay mot tap cac danh sach path truyen vao
  * @author _Daotac_
@@ -38,8 +36,8 @@ public class PlayAudio {
 	/**
 	 * Danh sach cac duong dan can play
 	 */
-	Lessions lesson;
-	Tracks[] listTracks;// Danh sach cac track
+	Lesson lesson;
+	Track[] listTrack;// Danh sach cac track
 	MediaPlayer mediaPlayer;
 	Media media;		
 	int currentTrack;	// So thu tu cua Track hien dang phat
@@ -47,9 +45,9 @@ public class PlayAudio {
 					// true neu dang phat
 					// false neu dang pause
 	
-	public PlayAudio(Lessions les){
+	public PlayAudio(Lesson les){
 		this.lesson = les;
-		this.listTracks = les.getTrack();
+		this.listTrack = les.getTrack();
 		// Khoi tao currentTrack
 		currentTrack = 0;
 		state = false;
@@ -57,7 +55,7 @@ public class PlayAudio {
 		// Khoi tao moi truong
 		final JFXPanel fxPanel = new JFXPanel();
 		
-		media = new Media((new File(listTracks[currentTrack].getAudioFile())).toURI().toString());
+		media = new Media((new File(listTrack[currentTrack].getAudioFile())).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.setCycleCount(1000000);
 		
@@ -71,16 +69,16 @@ public class PlayAudio {
    	 	});
 	}
 	
-	public Lessions getLesson() {
+	public Lesson getLesson() {
 		return lesson;
 	}
 
-	public void setLesson(Lessions lesson) {
+	public void setLesson(Lesson lesson) {
 		this.lesson = lesson;
 	}
 
-	public PlayAudio(Tracks[] listPath){
-		this.listTracks = listPath;
+	public PlayAudio(Track[] listPath){
+		this.listTrack = listPath;
 		// Khoi tao currentTrack
 		currentTrack = 0;
 		state = false;
@@ -88,7 +86,7 @@ public class PlayAudio {
 		// Khoi tao moi truong
 		final JFXPanel fxPanel = new JFXPanel();
 		
-		media = new Media((new File(listTracks[currentTrack].getAudioFile())).toURI().toString());
+		media = new Media((new File(listTrack[currentTrack].getAudioFile())).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		
 		Platform.runLater(new Runnable() {
@@ -120,21 +118,21 @@ public class PlayAudio {
 			}
 	}
 	
-	public Tracks[] getListPath() {
-		return listTracks;
+	public Track[] getListPath() {
+		return listTrack;
 	}
 
-	public void setListPath(Tracks[] listPath) {
-		this.listTracks = listPath;
+	public void setListPath(Track[] listPath) {
+		this.listTrack = listPath;
 	}
 	
-	public Tracks getCurrentTrack(){
-		return listTracks[currentTrack];
+	public Track getCurrentTrack(){
+		return listTrack[currentTrack];
 	}
 	
 	public String getCurrentScript()
 	{
-//		Tracks track = getCurrentTrack();
+//		Track track = getCurrentTrack();
 		return getCurrentTrack().getScriptFile();
 	}
 	
@@ -146,7 +144,7 @@ public class PlayAudio {
 	public boolean next(){
 		// neu ma currentTrack hien dang la phan tu cuoi
 		// thi return false va khong lam gi ca
-		if(currentTrack >= listTracks.length - 1)
+		if(currentTrack >= listTrack.length - 1)
 			return false;
 		
 		// neu khong phai thi dua track sang track ke tiep
@@ -158,8 +156,9 @@ public class PlayAudio {
     		mediaPlayer.stop();
 		}
 		// tao mot trinh phat nhac moi
-		media = new Media((new File(listTracks[currentTrack].getAudioFile())).toURI().toString());
+		media = new Media((new File(listTrack[currentTrack].getAudioFile())).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setCycleCount(1000000);
 		
 		Platform.runLater(new Runnable() {
             @Override
