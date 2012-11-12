@@ -11,6 +11,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
 import Suggetion.AnswerText;
+import Suggetion.SuggestionText;
 import Utility.Utility;
 import audio.PlayAudio;
 
@@ -33,7 +34,7 @@ public class ListenPanel extends JPanel{
 	private JButton playPauseButton;
 	private JButton nextButton;
 	private MainUI mainUI;
-	private AnswerText aText;
+	private SuggestionText suggestionText;
 	
 	private PlayAudio player = null;
 	private boolean isPlay = true;
@@ -46,7 +47,10 @@ public class ListenPanel extends JPanel{
 	public void setPlayer(PlayAudio player) {
 		this.player = player;
 		lessNameLabel.setText("LESSON : " + player.getLesson().getName());
-		aText.setAnswer(player.getCurrentScript());
+//		aText.setAnswer(player.getCurrentScript());
+		suggestionText.setScriptText(player.getCurrentScript());
+		suggestionText.setSuggestionText(player.getCurrentSuggestionText());
+		
 		sliderVolume.setMaximum(100);
 		sliderVolume.setValue(player.getVolumn());
 		
@@ -200,7 +204,7 @@ public class ListenPanel extends JPanel{
 			
 		});
 		add(nextButton);
-		aText = new AnswerText();
+		suggestionText = new SuggestionText();
 		
 	}
 	
@@ -262,7 +266,8 @@ public class ListenPanel extends JPanel{
 	private void next()
 	{
 		player.next();
-		aText.setAnswer(player.getCurrentScript());
+		suggestionText.setScriptText(player.getCurrentScript());
+		suggestionText.setSuggestionText(player.getCurrentSuggestionText());
 		inputArea.setText("");
 		suggestArea.setText("");
 		init();
@@ -270,26 +275,26 @@ public class ListenPanel extends JPanel{
 	
 	private void checkCharInput(char c)
 	{
-		int k;
-        if ((k = aText.checkChar(c)) == aText.SENTENCE_DONE)
-        {
-            // do something
-            System.out.println("het cau");
-            next();
-        }
-        else if (k == aText.WORD_DONE)
-        {
-            suggestArea.append(aText.getCorrectedWord()+" ");
-            inputArea.setText("");
-            if (!aText.nextWord()) next();
-        }
-        else if (k == aText.CHAR_CORRECT)
-        {
-            
-        }
-        else
-        {
-            inputArea.setText(aText.correct_chars);
-        }
+		int result = suggestionText.checkChar(c);
+		
+		if (result == AnswerText.WORD_DONE)
+		{
+			suggestArea.append(suggestionText.getCorrectedWord());
+			inputArea.setText("");
+		}
+		else if (result == AnswerText.SENTENCE_DONE)
+		{
+			System.out.println("Het cau");
+			suggestArea.append(suggestionText.getCorrectedWord());
+			inputArea.setText("");
+		}
+		else if (result == AnswerText.END_SCRIPT)
+		{
+			next();
+		}
+		else
+		{
+			inputArea.setText(suggestionText.getCorrectedWord());
+		}
 	}
 }
