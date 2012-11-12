@@ -75,11 +75,13 @@ public class SuggestionText {
 					next();
 					if (!currentScript.equals(""))
 					{
+						System.out.println("current "+currentScript);
 						break;
 					}
 					//
 					correctedWord += currentString;
 				}while(type != ERROR);
+				System.out.println(currentString);
 //				currentSciptChar += correctedWord.length();
 			}
 		}
@@ -128,9 +130,10 @@ public class SuggestionText {
 		}
 		else
 		{
-			currentSciptChar += currentScript.length()+1;
+			System.out.println("loi "+currentScript);
+			currentSciptChar += currentString.length();
 		}
-		System.out.println("loi "+currentScript);
+		
 	}
 	
 	private void processSuggestionText()
@@ -175,11 +178,12 @@ public class SuggestionText {
 				currentString += c;
 			}while(currentIndex < length);
 			currentString += " ";
+			currentString = " " + currentString;
 		}
 		else
 		{
 			// Loi
-			
+			type = ERROR;
 			processSuggestionText();
 		}
 	}
