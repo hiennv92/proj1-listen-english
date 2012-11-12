@@ -1,16 +1,33 @@
 package audio;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import model.Lesson;
-import model.Track;
+import model.Lessions;
+import model.Tracks;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+import java.nio.file.WatchEvent.Kind;
+import java.nio.file.WatchEvent.Modifier;
+
+import com.sun.media.jfxmedia.track.Track;
 
 /**
  * Dung de chay mot tap cac danh sach path truyen vao
@@ -21,8 +38,8 @@ public class PlayAudio {
 	/**
 	 * Danh sach cac duong dan can play
 	 */
-	Lesson lesson;
-	Track[] listTracks;// Danh sach cac track
+	Lessions lesson;
+	Tracks[] listTracks;// Danh sach cac track
 	MediaPlayer mediaPlayer;
 	Media media;		
 	int currentTrack;	// So thu tu cua Track hien dang phat
@@ -30,7 +47,7 @@ public class PlayAudio {
 					// true neu dang phat
 					// false neu dang pause
 	
-	public PlayAudio(Lesson les){
+	public PlayAudio(Lessions les){
 		this.lesson = les;
 		this.listTracks = les.getTrack();
 		// Khoi tao currentTrack
@@ -54,15 +71,15 @@ public class PlayAudio {
    	 	});
 	}
 	
-	public Lesson getLesson() {
+	public Lessions getLesson() {
 		return lesson;
 	}
 
-	public void setLesson(Lesson lesson) {
+	public void setLesson(Lessions lesson) {
 		this.lesson = lesson;
 	}
 
-	public PlayAudio(Track[] listPath){
+	public PlayAudio(Tracks[] listPath){
 		this.listTracks = listPath;
 		// Khoi tao currentTrack
 		currentTrack = 0;
@@ -103,16 +120,27 @@ public class PlayAudio {
 			}
 	}
 	
-	public Track[] getListPath() {
+	public Tracks[] getListPath() {
 		return listTracks;
 	}
 
-	public void setListPath(Track[] listPath) {
+	public void setListPath(Tracks[] listPath) {
 		this.listTracks = listPath;
 	}
 	
-	public Track getCurrentTrack(){
+	public Tracks getCurrentTrack(){
 		return listTracks[currentTrack];
+	}
+	
+	public String getCurrentScript()
+	{
+//		Tracks track = getCurrentTrack();
+		return getCurrentTrack().getScriptFile();
+	}
+	
+	public String getCurrentSuggestionText()
+	{
+		return getCurrentTrack().getSuggest();
 	}
 	
 	public boolean next(){
