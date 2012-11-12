@@ -1,6 +1,7 @@
 package DBManager;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import model.ConnectDB;
@@ -75,5 +76,22 @@ public class ListenDB {
 		}
 		
 		return top;
+	}
+	
+	public static void InsertListenDB(int userId, int lessId, int score){
+
+		try {
+			Statement state = ConnectDB.getConnect().createStatement();
+			
+			String sql = String.format("INSERT INTO listen(userId, lessId, Time, Score) VALUES " +
+									   "(%d, %d, CURRENT_DATE(), %d);", 
+									   userId, lessId, score);
+			
+			state.executeUpdate(sql);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

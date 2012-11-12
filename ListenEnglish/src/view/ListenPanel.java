@@ -5,17 +5,20 @@ import java.awt.event.*;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
+import DBManager.ListenDB;
 import Suggetion.AnswerText;
 import Suggetion.SuggestionText;
 import Utility.Utility;
 import audio.PlayAudio;
 
 import model.ConnectDB;
+import model.Lesson;
 
 public class ListenPanel extends JPanel{
 	private JLabel lessNameLabel;
@@ -36,9 +39,17 @@ public class ListenPanel extends JPanel{
 	private MainUI mainUI;
 	private SuggestionText suggestionText;
 	
+	// lesson hien tai dang nghe
+	private Lesson currentLesson;
+	// Thu tu cua track hien tai dang chay
+	private int currentTrackOrder;
+	
 	private PlayAudio player = null;
+	// trang thai cua trinh phat nhac co chay hay khong
 	private boolean isPlay = true;
 	
+	// Thread tong thoi gian
+	TotalTimeThread ttThread;
 	
 	public PlayAudio getPlayer() {
 		return player;
@@ -46,6 +57,9 @@ public class ListenPanel extends JPanel{
 
 	public void setPlayer(PlayAudio player) {
 		this.player = player;
+		currentLesson = player.getLesson();
+		currentTrackOrder = 0;
+		
 		lessNameLabel.setText("LESSON : " + player.getLesson().getName());
 //		aText.setAnswer(player.getCurrentScript());
 		suggestionText.setScriptText(player.getCurrentScript());
@@ -55,7 +69,11 @@ public class ListenPanel extends JPanel{
 		sliderVolume.setValue(player.getVolumn());
 		
 		init();
+		// chay luong slider cho bai nhac
 		(new SliderThread()).start();
+		// chay luong cap nhat tong thoi gian
+		ttThread = new TotalTimeThread();
+		ttThread.start();
 	}
 
 	public ListenPanel(MainUI mainUI){
@@ -214,7 +232,19 @@ public class ListenPanel extends JPanel{
 	}
 	
 	public void clickLogout(ActionEvent e){
+		isPlay = false;
+		synchronized(player){
+			player.stop();
+			player = null;
+		}
 		
+		mainUI.getChooseLevelPanel().setVisible(true);
+		mainUI.getListenPanel().setVisible(false);
+		
+		mainUI.getWelcome().setVisible(true);
+		mainUI.getTabbedPane().setVisible(false);
+		// Phai remove score panel di vi khi dang nhap se phai tao cai moi
+		mainUI.getTabbedPane().remove(mainUI.getScorePanel());
 	}
 	
 	public void clickPlayPause(ActionEvent e){
@@ -252,19 +282,27 @@ public class ListenPanel extends JPanel{
 		lblTime.setText(Utility.convertToTime(player.getCurrentTrack().getLength()/1000));
 	}
 	
-	public class SliderThread extends Thread{
-		public void run(){
-			while(isPlay){
-				if(player != null){
-					sliderTrack.setValue(player.getCurrentTime());
-					lblCurrentTime.setText(Utility.convertToTime(player.getCurrentTime()/1000));
-				}
-			}
-		}
-	}
-	
 	private void next()
 	{
+		currentTrackOrder++;
+		if(currentTrackOrder >= currentLesson.getTrack().length){
+			// dung chuong trinh nghe nhac lai
+			isPlay = false;
+			player.stop();
+			// tinh diem
+			int score = Utility.calScore(ttThread.getTime() / 1000, currentLesson.getLength() / 1000);
+			// dua ra thong bao
+			JOptionPane.showMessageDialog(this, "Ban dat duoc " + score + " diem.");
+			// them vao co so du lieu
+			ListenDB.InsertListenDB(mainUI.getCurrentUser().getID(), currentLesson.getID(), score);
+			mainUI.getScorePanel().refreshScore();
+			
+			// ra man hinh chon bai
+			mainUI.getChooseLevelPanel().setVisible(true);
+			mainUI.getListenPanel().setVisible(false);
+			
+		}
+		
 		player.next();
 		suggestionText.setScriptText(player.getCurrentScript());
 		suggestionText.setSuggestionText(player.getCurrentSuggestionText());
@@ -295,6 +333,45 @@ public class ListenPanel extends JPanel{
 		else
 		{
 			inputArea.setText(suggestionText.getCorrectedWord());
+		}
+	}
+	
+
+	public class SliderThread extends Thread{
+		public void run(){
+			while(isPlay){
+				if(player != null){
+					sliderTrack.setValue(player.getCurrentTime());
+					lblCurrentTime.setText(Utility.convertToTime(player.getCurrentTime()/1000));
+				}
+			}
+		}
+	}
+	
+	public class TotalTimeThread extends Thread{
+		// Thoi gian bat dau
+		long startTime;
+		// Tong thoi gian hien tai, tinh bang miliseconds
+		Integer countTime;
+		public TotalTimeThread(){
+			countTime = 0;
+			startTime = System.currentTimeMillis();
+		}
+		
+		public void run(){
+			while(isPlay){
+				synchronized(countTime){
+					countTime = (int)(System.currentTimeMillis() - startTime);
+				}
+				String timeS = Utility.convertToTime(countTime/1000);
+				lblTotalTime.setText(timeS);
+			}
+		}
+		
+		public int getTime(){
+			synchronized(countTime){
+				return countTime;
+			}
 		}
 	}
 }

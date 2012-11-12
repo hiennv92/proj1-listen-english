@@ -2,7 +2,7 @@ package model;
 
 public class Track {
 	private int id;
-	private int length;
+	private int length;		// tinh bang millisecond
 	private String audioFile;
 	private String scriptFile;
 	private String suggest;
