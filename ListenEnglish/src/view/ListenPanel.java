@@ -10,6 +10,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
+import Suggetion.AnswerText;
 import Utility.Utility;
 import audio.PlayAudio;
 
@@ -27,11 +28,12 @@ public class ListenPanel extends JPanel{
 	private JTextArea inputArea;
 	private JButton btnExit;
 	private JButton btnLogout;
-	private JButton btnOtherLesson;
+	private JButton btnOtherLession;
 	private JLabel lblTotalTime;
 	private JButton playPauseButton;
 	private JButton nextButton;
 	private MainUI mainUI;
+	private AnswerText aText;
 	
 	private PlayAudio player = null;
 	private boolean isPlay = true;
@@ -44,7 +46,7 @@ public class ListenPanel extends JPanel{
 	public void setPlayer(PlayAudio player) {
 		this.player = player;
 		lessNameLabel.setText("LESSON : " + player.getLesson().getName());
-		
+		aText.setAnswer(player.getCurrentScript());
 		sliderVolume.setMaximum(100);
 		sliderVolume.setValue(player.getVolumn());
 		
@@ -109,6 +111,7 @@ public class ListenPanel extends JPanel{
 		suggestArea.setWrapStyleWord(true);
 		suggestArea.setLineWrap(true);
 		suggestArea.setBounds(10, 162, 578, 84);
+		suggestArea.setEditable(false);
 		add(suggestArea);
 		
 		inputArea = new JTextArea();
@@ -116,6 +119,27 @@ public class ListenPanel extends JPanel{
 		inputArea.setWrapStyleWord(true);
 		inputArea.setLineWrap(true);
 		inputArea.setBounds(10, 257, 578, 84);
+		inputArea.setEditable(false);
+		inputArea.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				checkCharInput(arg0.getKeyChar());
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		add(inputArea);
 		
 		btnExit = new JButton("Exit");
@@ -136,9 +160,9 @@ public class ListenPanel extends JPanel{
 		});
 		add(btnLogout);
 		
-		btnOtherLesson = new JButton("Other Lession");
-		btnOtherLesson.setBounds(176, 378, 131, 23);
-		btnOtherLesson.addActionListener(new ActionListener(){
+		btnOtherLession = new JButton("Other Lession");
+		btnOtherLession.setBounds(176, 378, 131, 23);
+		btnOtherLession.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -146,7 +170,7 @@ public class ListenPanel extends JPanel{
 			}
 			
 		});
-		add(btnOtherLesson);
+		add(btnOtherLession);
 		
 		lblTotalTime = new JLabel("Total Time : ");
 		lblTotalTime.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -176,6 +200,8 @@ public class ListenPanel extends JPanel{
 			
 		});
 		add(nextButton);
+		aText = new AnswerText();
+		
 	}
 	
 	public void clickExit(ActionEvent e){
@@ -189,6 +215,7 @@ public class ListenPanel extends JPanel{
 	
 	public void clickPlayPause(ActionEvent e){
 		player.setState(!player.getState());
+		inputArea.setEditable(player.getState());
 		sliderTrack.setMaximum(player.getCurrentTrack().getLength());
 	}
 	
@@ -203,8 +230,7 @@ public class ListenPanel extends JPanel{
 	}
 	
 	public void clickNext(ActionEvent e){
-		player.next();
-		init();
+		next();
 	}
 	
 	private void draggOnTrackSlider(MouseEvent e) {
@@ -231,5 +257,39 @@ public class ListenPanel extends JPanel{
 				}
 			}
 		}
+	}
+	
+	private void next()
+	{
+		player.next();
+		aText.setAnswer(player.getCurrentScript());
+		inputArea.setText("");
+		suggestArea.setText("");
+		init();
+	}
+	
+	private void checkCharInput(char c)
+	{
+		int k;
+        if ((k = aText.checkChar(c)) == aText.SENTENCE_DONE)
+        {
+            // do something
+            System.out.println("het cau");
+            next();
+        }
+        else if (k == aText.WORD_DONE)
+        {
+            suggestArea.append(aText.getCorrectedWord()+" ");
+            inputArea.setText("");
+            if (!aText.nextWord()) next();
+        }
+        else if (k == aText.CHAR_CORRECT)
+        {
+            
+        }
+        else
+        {
+            inputArea.setText(aText.correct_chars);
+        }
 	}
 }
