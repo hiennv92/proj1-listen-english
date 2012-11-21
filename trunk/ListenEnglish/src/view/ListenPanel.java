@@ -238,7 +238,10 @@ public class ListenPanel extends JPanel{
 		player.setState(!player.getState());
 		// dat lai text cho button 
 		if(player.getState())
+		{
 			playPauseButton.setText("Pause");
+			inputArea.requestFocus();
+		}
 		else
 			playPauseButton.setText("Play");
 		// neu la lan dau tien chay thi chay timer

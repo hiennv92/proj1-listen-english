@@ -11,7 +11,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ConnectDB.initInfor("root", "12345", "127.0.0.1", "3306", "listeningenglish");
+		ConnectDB.initInfor("root", "hn2221992", "127.0.0.1", "3306", "listeningenglish");
 		if(!ConnectDB.connect())
 			(new ConfigDlg()).setVisible(true);
 		else 

@@ -121,10 +121,11 @@ public class ChooseLevelPanel extends JPanel{
 		Lesson less = mainUI.getLesson(tab, lessonOrder);
 		
 		if(less.getTrack() != null)
-			previewPlayer.playSpecifiedFile(less.getTrack()[0].getAudioFile());
+			previewPlayer.playSpecifiedFile(less.getPreviewFile());
 	}
 	
-	public void clickLogout(ActionEvent e){		
+	public void clickLogout(ActionEvent e){	
+		previewPlayer.stop();
 		mainUI.getChooseLevelPanel().setVisible(true);
 		mainUI.getListenPanel().setVisible(false);
 		
