@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-import model.DBManager.ConnectDB;
+import model.db.ConnectDB;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
