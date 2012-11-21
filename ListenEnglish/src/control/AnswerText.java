@@ -54,7 +54,6 @@ public class AnswerText {
             	{ 
             		return SENTENCE_DONE;
             	}
-            	System.out.println("het tu");
             	correct_chars += " ";
                 return WORD_DONE;
             }
@@ -75,7 +74,6 @@ public class AnswerText {
     	if (correct_chars.equals(words[words.length - 1]))
     	
     		return false;
-    	System.out.println("-"+correct_chars+ " -"+words[words.length -1]+"-");
         count_char = 0;
         ++count_word;
         correct_chars = "";

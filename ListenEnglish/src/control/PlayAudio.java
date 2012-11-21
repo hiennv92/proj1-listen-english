@@ -153,6 +153,21 @@ public class PlayAudio {
 		return listTrack[currentTrack];
 	}
 	
+	public void setCurrentTrack(int count)
+	{
+		this.currentTrack = count;
+	}
+	
+	public int getCurrentPosition()
+	{
+		return currentTrack + 1;
+	}
+	
+	public int getNumberOfTracks()
+	{
+		return listTrack.length;
+	}
+	
 	public String getCurrentScript()
 	{
 //		Track track = getCurrentTrack();

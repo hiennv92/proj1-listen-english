@@ -9,8 +9,8 @@ import javax.swing.UIManager;
 
 import model.Lesson;
 import model.User;
-import model.db.ConnectDB;
-import model.db.LessonDB;
+import model.DBManager.ConnectDB;
+import model.DBManager.LessonDB;
 
 public class MainUI extends JFrame {
 	private User currentUser;
@@ -61,7 +61,6 @@ public class MainUI extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(650, 500);
 		setResizable(false);
-		setLocationRelativeTo(null);
 	}
 
 	public User getCurrentUser() {
