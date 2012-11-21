@@ -14,8 +14,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import control.Utility;
+
 import model.User;
-import DBManager.UserDB;
+import model.DBManager.UserDB;
 
 public class WelcomePanel extends JPanel{
 	private JTextField accountField;
@@ -98,22 +100,33 @@ public class WelcomePanel extends JPanel{
 			mainUI.getChooseLevelPanel().setVisible(true);
 			
 			mainUI.setCurrentUser(user);
-/////////////// Bay gio moi khoi tao duoc scorePanel
+/////////// Bay gio moi khoi tao duoc scorePanel
 			mainUI.setScorePanel(new ScorePanel(mainUI));
 			mainUI.getTabbedPane().addTab("High Score", null, mainUI.getScorePanel(), null);
 		}
 	}
 	
 	public void clickSignup(ActionEvent e){
-		User user = UserDB.getUserByName(accountField.getText());
+		String name = accountField.getText();
+		String pass = passwordField.getText();
+		String msgName = Utility.checkAccountInfo(name);
+		String msgPass = Utility.checkAccountInfo(pass);
+		
+		User user = UserDB.getUserByName(name);
+		
 		if(user != null)
 			JOptionPane.showMessageDialog(this, "Account avaiable !!!");
-		else if(accountField.getText().equals(""))
+		else if(name.equals(""))
 			JOptionPane.showMessageDialog(this, "Insert your username !!!");
-		else if(passwordField.getText().equals(""))
+		else if(pass.equals(""))
 			JOptionPane.showMessageDialog(this, "Insert your password !!!");
+		else if(msgName != null)
+			JOptionPane.showMessageDialog(this, msgName);
+		else if(msgPass != null)
+			JOptionPane.showMessageDialog(this, msgPass);
 		else{
 			UserDB.insertUser(new User(0, passwordField.getText(), accountField.getText()));
+			JOptionPane.showMessageDialog(this, "Successfull !!!");
 			mainUI.getWelcome().setVisible(false);
 			mainUI.getTabbedPane().setVisible(true);
 			mainUI.setCurrentUser(UserDB.getUserByName(accountField.getText()));

@@ -9,7 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
-import DBManager.ListenDB;
+import model.DBManager.ListenDB;
+
 
 public class ScorePanel extends JPanel{
 	private JPanel userScorePanel;

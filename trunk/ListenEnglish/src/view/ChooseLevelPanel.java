@@ -13,12 +13,16 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 
-import audio.PlayAudio;
+import model.Lesson;
+
+import control.PlayAudio;
+
 
 public class ChooseLevelPanel extends JPanel{
 	private JTabbedPane chooseLevelTab;
-	private JButton testButton;
+	private JButton previewButton;
 	private JButton listenButton;
+	private JButton btnLogout;
 	
 	private JPanel panelLevel[];
 	private JList listLevel[];
@@ -30,8 +34,11 @@ public class ChooseLevelPanel extends JPanel{
 	
 	MainUI mainUI;
 	
+	PlayAudio previewPlayer;
+	
 	public ChooseLevelPanel(MainUI mainUI){
 		this.mainUI = mainUI;
+		previewPlayer = new PlayAudio();
 		
 		listLV = new String[3][];
 		listLevel = new JList[3];
@@ -56,20 +63,20 @@ public class ChooseLevelPanel extends JPanel{
 		chooseLevelTab.setBounds(10, 11, 589, 349);
 		add(chooseLevelTab);
 		
-		testButton = new JButton("TEST");
-		testButton.setBounds(191, 371, 116, 23);
-		testButton.addActionListener(new ActionListener(){
+		previewButton = new JButton("PREVIEW");
+		previewButton.setBounds(150, 371, 116, 23);
+		previewButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clickTest(e);
+				clickPlayPreview(e);
 			}
 			
 		});
-		add(testButton);
+		add(previewButton);
 		
 		listenButton = new JButton("LISTEN");
-		listenButton.setBounds(317, 371, 113, 23);
+		listenButton.setBounds(266, 371, 113, 23);
 		listenButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
@@ -77,6 +84,15 @@ public class ChooseLevelPanel extends JPanel{
 			}
 		});
 		add(listenButton);
+		
+		btnLogout = new JButton("Logout");
+		btnLogout.setBounds(379, 371, 113, 23);
+		btnLogout.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				clickLogout(e);
+			}
+		});
+		add(btnLogout);
 		
 		// Them vao cac tab level
 		for(int i = 0; i < 3; i++){
@@ -96,12 +112,33 @@ public class ChooseLevelPanel extends JPanel{
 		}
 	}
 	
-	public void clickTest(ActionEvent e){
+	public void clickPlayPreview(ActionEvent e){
+		previewPlayer.stop();
 		
+		int tab = chooseLevelTab.getSelectedIndex();
+		int lessonOrder = listLevel[tab].getSelectedIndex() - 2;
+		
+		Lesson less = mainUI.getLesson(tab, lessonOrder);
+		
+		if(less.getTrack() != null)
+			previewPlayer.playSpecifiedFile(less.getTrack()[0].getAudioFile());
+	}
+	
+	public void clickLogout(ActionEvent e){		
+		mainUI.getChooseLevelPanel().setVisible(true);
+		mainUI.getListenPanel().setVisible(false);
+		
+		mainUI.getWelcome().setVisible(true);
+		mainUI.getTabbedPane().setVisible(false);
+		// Phai remove score panel di vi khi dang nhap se phai tao cai moi
+		mainUI.getTabbedPane().remove(mainUI.getScorePanel());
 	}
 	
 	public void clickListen(ActionEvent e){
+		previewPlayer.stop();
+		// lay ve so thu tu tab
 		int tab = chooseLevelTab.getSelectedIndex();
+		// lay ve vi tri cua lesson
 		int lessonOrder = listLevel[tab].getSelectedIndex() - 2;
 		
 		if(lessonOrder < 0)

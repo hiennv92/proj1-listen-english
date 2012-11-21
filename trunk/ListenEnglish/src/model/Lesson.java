@@ -1,6 +1,6 @@
 package model;
 
-import Utility.Utility;
+import control.Utility;
 
 public class Lesson {
 	private int id;

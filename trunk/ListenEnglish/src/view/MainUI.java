@@ -7,10 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
-import model.ConnectDB;
 import model.Lesson;
 import model.User;
-import DBManager.LessonDB;
+import model.DBManager.ConnectDB;
+import model.DBManager.LessonDB;
 
 public class MainUI extends JFrame {
 	private User currentUser;
@@ -32,11 +32,6 @@ public class MainUI extends JFrame {
 	}
 	
 	public MainUI() {
-		// khoi tao cac tham so ban dau cho co so du lieu
-		ConnectDB.initInfor("root", "12345", "127.0.0.1", "3306", "listeningenglish");
-		// ket noi vao co so du lieu
-		ConnectDB.connect();
-		
 		lessons = new Lesson[3][];
 		lessons[0] = LessonDB.getLessonByLevel(1);
 		lessons[1] = LessonDB.getLessonByLevel(2);
