@@ -18,8 +18,8 @@ import control.Utility;
 
 
 import model.Lesson;
-import model.DBManager.ConnectDB;
-import model.DBManager.ListenDB;
+import model.db.ConnectDB;
+import model.db.ListenDB;
 
 public class ListenPanel extends JPanel{
 	private JLabel lessNameLabel;
