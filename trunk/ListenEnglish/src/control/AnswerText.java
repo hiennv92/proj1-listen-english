@@ -23,7 +23,6 @@ public class AnswerText {
     public void setAnswer(String answer)
     {
         this.answer = answer;
-        System.out.println("dap an"+answer);
         this.words = this.answer.split(" ");
         reset();
     }
@@ -42,7 +41,6 @@ public class AnswerText {
     {
         if (words.length <= count_word)
         {
-//            System.out.println("het cau"+words)
             return SENTENCE_DONE;   // het cau
         }
         
