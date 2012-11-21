@@ -12,6 +12,7 @@ CREATE  TABLE IF NOT EXISTS `listeningenglish`.`lesson` (
   `id` INT(11) NOT NULL ,
   `name` VARCHAR(255) NULL DEFAULT NULL ,
   `level` TINYINT(4) NULL DEFAULT NULL ,
+  `previewFile` VARCHAR(255) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -62,32 +63,16 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `listeningenglish`.`track` (
   `id` INT(11) NOT NULL ,
+  `length` INT(11) NULL DEFAULT NULL ,
+  `audioFile` VARCHAR(255) NULL DEFAULT NULL ,
+  `script` TEXT NULL DEFAULT NULL ,
+  `suggest` VARCHAR(255) NULL DEFAULT NULL ,
   `lessID` INT(11) NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_track_lesson1` (`lessID` ASC) ,
   CONSTRAINT `fk_track_lesson1`
     FOREIGN KEY (`lessID` )
     REFERENCES `listeningenglish`.`lesson` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `listeningenglish`.`sentence`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `listeningenglish`.`sentence` (
-  `id` INT(11) NOT NULL ,
-  `length` INT(11) NULL DEFAULT NULL ,
-  `audioFile` VARCHAR(255) NULL DEFAULT NULL ,
-  `script` TEXT NULL DEFAULT NULL ,
-  `suggest` VARCHAR(255) NULL DEFAULT NULL ,
-  `trackID` INT(11) NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_sentence_track1` (`trackID` ASC) ,
-  CONSTRAINT `fk_sentence_track1`
-    FOREIGN KEY (`trackID` )
-    REFERENCES `listeningenglish`.`track` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
