@@ -296,7 +296,7 @@ public class ListenPanel extends JPanel{
 //			JOptionPane.showMessageDialog(this, "Ban dat duoc " + score + " diem.");
 			Object[] options = {"Play again",
             "Other Lessons"};
-			int n = JOptionPane.showOptionDialog(this, "You got " + score + ".",
+			int n = JOptionPane.showOptionDialog(this, "You got " + score + " points.",
 												"Congratulation!!!",
 												JOptionPane.YES_NO_OPTION,
 												JOptionPane.INFORMATION_MESSAGE,
@@ -321,12 +321,6 @@ public class ListenPanel extends JPanel{
 			
 		}else
 		{
-			try {
-				Thread.currentThread().sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 		player.next();
