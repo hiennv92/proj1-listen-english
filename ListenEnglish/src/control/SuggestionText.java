@@ -30,7 +30,6 @@ public class SuggestionText {
 	public void setSuggestionText(String suggestionText)
 	{
 		this.suggestionText = suggestionText.replaceAll(" ", "");
-//		System.out.println("-"+this.suggestionText);
 		next();
 	}
 	
@@ -42,30 +41,23 @@ public class SuggestionText {
 	
 	public int checkChar(char c)
 	{
-//		String result = "";
 		correctedWord = "";
 		int k = answerText.checkChar(c);
 		correctedWord = answerText.getCorrectedWord();
 		if (k == AnswerText.CHAR_CORRECT)
 		{
-//			result = answerText.getCorrectedWord();
 		}
 		else if (k == AnswerText.WORD_DONE)
 		{
-//			result = answerText.getCorrectedWord();
-			
 			answerText.nextWord();
 		}
 		else if (k == AnswerText.WORD_FAIL)
 		{
-//			result = answerText.getCorrectedWord();
 		}
 		else if (k == AnswerText.SENTENCE_DONE)
 		{
-//			currentSciptChar += currentScript.length();
 			if (currentSciptChar >= scriptText.length() - 1)
 			{
-//				result = "$";
 				System.out.println("het");
 				return AnswerText.END_SCRIPT;
 			}
@@ -81,8 +73,6 @@ public class SuggestionText {
 					//
 					correctedWord += currentString;
 				}while(type != ERROR);
-				System.out.println(currentString);
-//				currentSciptChar += correctedWord.length();
 			}
 		}
 		
@@ -104,7 +94,6 @@ public class SuggestionText {
 		{
 			int k = Integer.parseInt(currentString);
 			int i = currentSciptChar;
-			int j = 0;
 			int length = scriptText.length();
 			char c;
 			// xoa het dau cach o dau neu co
@@ -125,7 +114,6 @@ public class SuggestionText {
 			}
 			currentSciptChar = i;
 			currentString = "";
-//			if (currentScript.charAt(0)==32) currentScript = currentScript.replaceFirst(" ", "");
 			answerText.setAnswer(currentScript);
 		}
 		else
@@ -140,11 +128,9 @@ public class SuggestionText {
 	{
 		++currentIndex;
 		int length = suggestionText.length();
-//		System.out.println("so "+length);
 		if (currentIndex == length - 1) return;
 		char c = suggestionText.charAt(currentIndex);
 		currentString = "";
-//		System.out.println("hehe "+currentIndex + c);
 		if (isNumber(c))
 		{
 			type = NUMBER;
@@ -152,19 +138,12 @@ public class SuggestionText {
 			{
 				currentString += c;
 				++currentIndex;
-//				c = suggestionText.charAt(currentIndex);
 			}while(currentIndex < length && isNumber(c = suggestionText.charAt(currentIndex)));
 			if (!isNumber(c)) --currentIndex;
 		}
 		else if (isPunctuation(c))
 		{
 			type = PUNCTUATION;
-//			do
-//			{
-//				currentString += c;
-//				++currentIndex;
-////				c = suggestionText.charAt(currentIndex);
-//			}while(currentIndex < length && isPunctuation(c)(c = suggestionText.charAt(currentIndex)));
 			currentString += c + " ";
 		}
 		else if (c == '[')
