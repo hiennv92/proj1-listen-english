@@ -27,7 +27,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import model.ConnectDB;
+import model.DBManager.ConnectDB;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -152,6 +152,10 @@ public class ConfigDlg extends JDialog {
 							if (ConnectDB.connect()) {
 								lbNotice.setForeground(Color.GREEN);
 								lbNotice.setText("Successful connection!");
+								(ConfigDlg.this).setVisible(false);
+								
+								// chay mainUI o day
+								(new MainUI()).setVisible(true);
 							} else {
 								lbNotice.setForeground(Color.RED);
 								lbNotice.setText("Connection failure!");
@@ -164,6 +168,19 @@ public class ConfigDlg extends JDialog {
 					getContentPane().add(butReset);
 					butReset.setText("Reset");
 					butReset.setBounds(302, 169, 108, 22);
+					butReset.addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							// TODO Auto-generated method stub
+							tfHost.setText("localhost");
+							tfPort.setText("3306");
+							tfDatabase.setText("listeningenglish");
+							tfUser.setText("root");
+							pfPass.setText("12345");
+							lbNotice.setText("");
+						}
+					});
 				}
 				{
 					butExit = new JButton();
@@ -172,8 +189,7 @@ public class ConfigDlg extends JDialog {
 					butExit.setBounds(302, 215, 108, 22);
 					butExit.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							System.out.println("butExit.actionPerformed, event="+evt);
-							//TODO add your code for butExit.actionPerformed
+							System.exit(0);
 						}
 					});
 				}

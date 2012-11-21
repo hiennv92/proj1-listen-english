@@ -11,14 +11,15 @@ import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
-import DBManager.ListenDB;
-import Suggetion.AnswerText;
-import Suggetion.SuggestionText;
-import Utility.Utility;
-import audio.PlayAudio;
+import control.AnswerText;
+import control.PlayAudio;
+import control.SuggestionText;
+import control.Utility;
 
-import model.ConnectDB;
+
 import model.Lesson;
+import model.DBManager.ConnectDB;
+import model.DBManager.ListenDB;
 
 public class ListenPanel extends JPanel{
 	private JLabel lessNameLabel;
@@ -31,7 +32,7 @@ public class ListenPanel extends JPanel{
 	private JTextArea suggestArea;
 	private JTextArea inputArea;
 	private JButton btnExit;
-	private JButton btnLogout;
+	
 	private JButton btnOtherLession;
 	private JLabel lblTotalTime;
 	private JButton playPauseButton;
@@ -47,6 +48,8 @@ public class ListenPanel extends JPanel{
 	private PlayAudio player = null;
 	// trang thai cua trinh phat nhac co chay hay khong
 	private boolean isPlay = true;
+	// kiem tra lan dau tien click
+	private boolean firstPlay = true;
 	
 	// Thread tong thoi gian
 	TotalTimeThread ttThread;
@@ -73,7 +76,16 @@ public class ListenPanel extends JPanel{
 		(new SliderThread()).start();
 		// chay luong cap nhat tong thoi gian
 		ttThread = new TotalTimeThread();
-		ttThread.start();
+		// cai dat lai la lan chay dau tien
+		firstPlay = true;
+		// khung nhap bi disable
+		inputArea.setEditable(false);
+		// set lai trang thai
+		lblTotalTime.setText("Total Time : 0:00:00");
+		playPauseButton.setText("Play");
+		
+		suggestArea.setText("");
+		inputArea.setText("");
 	}
 
 	public ListenPanel(MainUI mainUI){
@@ -171,19 +183,10 @@ public class ListenPanel extends JPanel{
 				clickExit(e);
 			}
 		});
-		add(btnExit);
+		//add(btnExit);
 		
-		btnLogout = new JButton("Logout");
-		btnLogout.setBounds(317, 378, 131, 23);
-		btnLogout.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				clickLogout(e);
-			}
-		});
-		add(btnLogout);
-		
-		btnOtherLession = new JButton("Other Lession");
-		btnOtherLession.setBounds(176, 378, 131, 23);
+		btnOtherLession = new JButton("Back");
+		btnOtherLession.setBounds(250, 378, 131, 23);
 		btnOtherLession.addActionListener(new ActionListener(){
 
 			@Override
@@ -194,13 +197,13 @@ public class ListenPanel extends JPanel{
 		});
 		add(btnOtherLession);
 		
-		lblTotalTime = new JLabel("Total Time : ");
+		lblTotalTime = new JLabel("Total Time : 0:00:00");
 		lblTotalTime.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblTotalTime.setBounds(57, 127, 156, 29);
 		add(lblTotalTime);
 		
-		playPauseButton = new JButton("P");
-		playPauseButton.setBounds(00, 61, 50, 30);
+		playPauseButton = new JButton("Play");
+		playPauseButton.setBounds(0, 61, 100, 30);
 		playPauseButton.addActionListener(new ActionListener(){
 
 			@Override
@@ -221,7 +224,7 @@ public class ListenPanel extends JPanel{
 			}
 			
 		});
-		add(nextButton);
+		//add(nextButton);
 		suggestionText = new SuggestionText();
 		
 	}
@@ -231,25 +234,20 @@ public class ListenPanel extends JPanel{
 		System.exit(0);
 	}
 	
-	public void clickLogout(ActionEvent e){
-		isPlay = false;
-		synchronized(player){
-			player.stop();
-			player = null;
-		}
-		
-		mainUI.getChooseLevelPanel().setVisible(true);
-		mainUI.getListenPanel().setVisible(false);
-		
-		mainUI.getWelcome().setVisible(true);
-		mainUI.getTabbedPane().setVisible(false);
-		// Phai remove score panel di vi khi dang nhap se phai tao cai moi
-		mainUI.getTabbedPane().remove(mainUI.getScorePanel());
-	}
-	
 	public void clickPlayPause(ActionEvent e){
 		player.setState(!player.getState());
-		inputArea.setEditable(player.getState());
+		// dat lai text cho button 
+		if(player.getState())
+			playPauseButton.setText("Pause");
+		else
+			playPauseButton.setText("Play");
+		// neu la lan dau tien chay thi chay timer
+		if(firstPlay){
+			ttThread.start();
+			inputArea.setEditable(true);
+			firstPlay = false;
+		}
+		//inputArea.setEditable(player.getState());
 		sliderTrack.setMaximum(player.getCurrentTrack().getLength());
 	}
 	
@@ -355,16 +353,18 @@ public class ListenPanel extends JPanel{
 		Integer countTime;
 		public TotalTimeThread(){
 			countTime = 0;
-			startTime = System.currentTimeMillis();
+			
 		}
 		
 		public void run(){
+			startTime = System.currentTimeMillis();
+			
 			while(isPlay){
 				synchronized(countTime){
 					countTime = (int)(System.currentTimeMillis() - startTime);
 				}
 				String timeS = Utility.convertToTime(countTime/1000);
-				lblTotalTime.setText(timeS);
+				lblTotalTime.setText("Total Time : " + timeS);
 			}
 		}
 		
