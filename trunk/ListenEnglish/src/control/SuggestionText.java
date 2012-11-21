@@ -37,6 +37,7 @@ public class SuggestionText {
 	{
 		reset();
 		this.scriptText = scriptText;
+		System.out.println(scriptText);
 	}
 	
 	public int checkChar(char c)
@@ -58,7 +59,7 @@ public class SuggestionText {
 		{
 			if (currentSciptChar >= scriptText.length() - 1)
 			{
-				System.out.println("het");
+				correctedWord += scriptText.charAt(scriptText.length() - 1);
 				return AnswerText.END_SCRIPT;
 			}
 			else
@@ -67,7 +68,6 @@ public class SuggestionText {
 					next();
 					if (!currentScript.equals(""))
 					{
-						System.out.println("current "+currentScript);
 						break;
 					}
 					//
@@ -88,7 +88,6 @@ public class SuggestionText {
 	private void next()
 	{
 		processSuggestionText();
-		System.out.println("so");
 		currentScript = "";
 		if (type == NUMBER)
 		{
@@ -118,7 +117,6 @@ public class SuggestionText {
 		}
 		else
 		{
-			System.out.println("loi "+currentScript);
 			currentSciptChar += currentString.length();
 		}
 		

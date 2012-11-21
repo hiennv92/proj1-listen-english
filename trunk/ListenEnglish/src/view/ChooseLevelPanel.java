@@ -117,6 +117,8 @@ public class ChooseLevelPanel extends JPanel{
 		
 		int tab = chooseLevelTab.getSelectedIndex();
 		int lessonOrder = listLevel[tab].getSelectedIndex() - 2;
+		if (lessonOrder < 0 || tab < 0)
+			return;
 		
 		Lesson less = mainUI.getLesson(tab, lessonOrder);
 		

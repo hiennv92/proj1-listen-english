@@ -17,7 +17,7 @@ import javax.swing.border.LineBorder;
 import control.Utility;
 
 import model.User;
-import model.db.UserDB;
+import model.DBManager.UserDB;
 
 public class WelcomePanel extends JPanel{
 	private JTextField accountField;

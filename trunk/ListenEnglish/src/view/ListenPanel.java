@@ -18,8 +18,8 @@ import control.Utility;
 
 
 import model.Lesson;
-import model.db.ConnectDB;
-import model.db.ListenDB;
+import model.DBManager.ConnectDB;
+import model.DBManager.ListenDB;
 
 public class ListenPanel extends JPanel{
 	private JLabel lessNameLabel;
@@ -279,7 +279,7 @@ public class ListenPanel extends JPanel{
 	public void init(){
 		isPlay = true;
 		sliderTrack.setMaximum(player.getCurrentTrack().getLength());
-		trackNameLabel.setText("TRACK : " + player.getCurrentTrack().getAudioFile());
+		trackNameLabel.setText("TRACK : " + player.getCurrentPosition() + " / " + player.getNumberOfTracks());
 		lblTime.setText(Utility.convertToTime(player.getCurrentTrack().getLength()/1000));
 	}
 	
@@ -293,15 +293,40 @@ public class ListenPanel extends JPanel{
 			// tinh diem
 			int score = Utility.calScore(ttThread.getTime() / 1000, currentLesson.getLength() / 1000);
 			// dua ra thong bao
-			JOptionPane.showMessageDialog(this, "Ban dat duoc " + score + " diem.");
+//			JOptionPane.showMessageDialog(this, "Ban dat duoc " + score + " diem.");
+			Object[] options = {"Play again",
+            "Other Lessons"};
+			int n = JOptionPane.showOptionDialog(this, "You got " + score + ".",
+												"Congratulation!!!",
+												JOptionPane.YES_NO_OPTION,
+												JOptionPane.INFORMATION_MESSAGE,
+												null,     //do not use a custom Icon
+												options,  //the titles of buttons
+												options[0]); //default button title
 			// them vao co so du lieu
 			ListenDB.InsertListenDB(mainUI.getCurrentUser().getID(), currentLesson.getID(), score);
 			mainUI.getScorePanel().refreshScore();
+			if (n == 0)
+			{
+				sliderTrack.setValue(0);
+				player.setCurrentTrack(-1);
+				player.next();
+			}
+			else
+			{
+				// ra man hinh chon bai
+				mainUI.getChooseLevelPanel().setVisible(true);
+				mainUI.getListenPanel().setVisible(false);
+			}
 			
-			// ra man hinh chon bai
-			mainUI.getChooseLevelPanel().setVisible(true);
-			mainUI.getListenPanel().setVisible(false);
-			
+		}else
+		{
+			try {
+				Thread.currentThread().sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		player.next();
@@ -323,12 +348,14 @@ public class ListenPanel extends JPanel{
 		}
 		else if (result == AnswerText.SENTENCE_DONE)
 		{
-			System.out.println("Het cau");
 			suggestArea.append(suggestionText.getCorrectedWord());
 			inputArea.setText("");
 		}
 		else if (result == AnswerText.END_SCRIPT)
 		{
+//			System.out.println(suggestionText.getCorrectedWord());
+			suggestArea.append(suggestionText.getCorrectedWord());
+			inputArea.setText("");
 			next();
 		}
 		else

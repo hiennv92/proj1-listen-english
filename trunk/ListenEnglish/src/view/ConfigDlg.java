@@ -14,7 +14,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,7 +27,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import model.db.ConnectDB;
+import model.DBManager.ConnectDB;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -67,26 +66,13 @@ public class ConfigDlg extends JDialog {
 	private JTextField tfHost;
 	private JLabel lbDatabase;
 	private JLabel lbUser;
-	
-	static {
-		try {
-			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * 
 	 */
 	public ConfigDlg() {
 		// TODO Auto-generated constructor stub
-		File f = new File("config.xml");
-        if (f.exists()) {
-            ConnectDB.readConfig();
-        }
 		initGUI();
-		setLocationRelativeTo(null);
 	}
 	
 	private void initGUI() {
@@ -120,44 +106,44 @@ public class ConfigDlg extends JDialog {
 				{
 					tfHost = new JTextField();
 					getContentPane().add(tfHost);
-					tfHost.setText(ConnectDB.getHost());
-					tfHost.setBounds(116, 77, 150, 22);
+					tfHost.setText("localhost");
+					tfHost.setBounds(116, 77, 108, 22);
 				}
 				{
 					tfUser = new JTextField();
 					getContentPane().add(tfUser);
-					tfUser.setText(ConnectDB.getUser());
-					tfUser.setBounds(116, 120, 150, 22);
+					tfUser.setText("root");
+					tfUser.setBounds(116, 120, 108, 22);
 				}
 				{
 					tfDatabase = new JTextField();
 					getContentPane().add(tfDatabase);
-					tfDatabase.setText(ConnectDB.getDatabase());
-					tfDatabase.setBounds(116, 215, 150, 22);
+					tfDatabase.setText("listeningenglish");
+					tfDatabase.setBounds(116, 215, 108, 22);
 				}
 				{
 					pfPass = new JPasswordField();
 					getContentPane().add(pfPass);
-					pfPass.setText(ConnectDB.getPassword());
-					pfPass.setBounds(116, 166, 150, 22);
+					pfPass.setText("12345");
+					pfPass.setBounds(116, 166, 108, 22);
 				}
 				{
 					lbPort = new JLabel();
 					getContentPane().add(lbPort);
 					lbPort.setText("Port");
-					lbPort.setBounds(293, 84, 26, 15);
+					lbPort.setBounds(249, 84, 26, 15);
 				}
 				{
 					tfPort = new JTextField();
 					getContentPane().add(tfPort);
-					tfPort.setText(ConnectDB.getPort());
-					tfPort.setBounds(346, 81, 108, 22);
+					tfPort.setText("3306");
+					tfPort.setBounds(302, 81, 108, 22);
 				}
 				{
 					butConnect = new JButton();
 					getContentPane().add(butConnect);
 					butConnect.setText("Connect");
-					butConnect.setBounds(346, 123, 108, 22);
+					butConnect.setBounds(302, 123, 108, 22);
 					butConnect.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							//TODO add your code for butConnect.actionPerformed
@@ -181,7 +167,7 @@ public class ConfigDlg extends JDialog {
 					butReset = new JButton();
 					getContentPane().add(butReset);
 					butReset.setText("Reset");
-					butReset.setBounds(346, 169, 108, 22);
+					butReset.setBounds(302, 169, 108, 22);
 					butReset.addActionListener(new ActionListener() {
 						
 						@Override
@@ -200,7 +186,7 @@ public class ConfigDlg extends JDialog {
 					butExit = new JButton();
 					getContentPane().add(butExit);
 					butExit.setText("Exit");
-					butExit.setBounds(346, 215, 108, 22);
+					butExit.setBounds(302, 215, 108, 22);
 					butExit.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							System.exit(0);
@@ -222,7 +208,7 @@ public class ConfigDlg extends JDialog {
 				}
 			}
 			{
-				this.setSize(500, 350);
+				this.setSize(438, 371);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
