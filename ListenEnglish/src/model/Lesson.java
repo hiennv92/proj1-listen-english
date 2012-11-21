@@ -8,13 +8,15 @@ public class Lesson {
 	private int level;
 	private Track[] listTrack;
 	private int length;
+	private String previewFile;
 	
-	public Lesson(int id, String name, int level, Track[] listTrack){
+	public Lesson(int id, String name, int level, Track[] listTrack, String previewFile){
 		this.id = id;
 		this.name = name;
 		this.level = level;
 		this.listTrack = listTrack;
 		this.length = 0;
+		this.previewFile = previewFile;
 		
 		for(int i = 0; i < listTrack.length; i++)
 			length += listTrack[i].getLength();
@@ -38,6 +40,11 @@ public class Lesson {
 	
 	public int getLength(){
 		return length;
+	}
+	
+	public String getPreviewFile()
+	{
+		return previewFile;
 	}
 	
 	public String toString(){

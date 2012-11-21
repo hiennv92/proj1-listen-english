@@ -8,10 +8,10 @@ import model.Track;
 
 public class LessonDB {
 	public static Lesson getLessonByID(int id){
-		Lesson lession = null;
+		Lesson lesson = null;
 		try{
 			Statement state = ConnectDB.getConnect().createStatement();
-			String query = String.format("SELECT * FROM lession WHERE id = %d", id);
+			String query = String.format("SELECT * FROM lesson WHERE id = %d", id);
 			ResultSet results = state.executeQuery(query);
 			
 			if(results.next()){
@@ -19,9 +19,9 @@ public class LessonDB {
 				int _id = results.getInt(1);
 				String _name = results.getString(2);
 				int _level = results.getInt(3);
-				Track[] _tracks = TrackDB.getTrackByLessionID(id);
-				
-				lession = new Lesson(_id, _name, _level, _tracks);
+				Track[] _tracks = TrackDB.getTrackByLessonID(id);
+				String _preview = results.getString(4);
+				lesson = new Lesson(_id, _name, _level, _tracks, _preview);
 			}
 		} catch (Exception e){
 			e.printStackTrace();
@@ -29,16 +29,16 @@ public class LessonDB {
 			return null;
 		}
 		
-		return lession;
+		return lesson;
 	}
 	
 	public static Lesson[] getLessonByLevel(int level){
-		Lesson lessions[] = null;
-		Lesson lession = null;
+		Lesson lessons[] = null;
+		Lesson lesson = null;
 		try{
 			Statement state = ConnectDB.getConnect().createStatement();
-			String qCount = String.format("SELECT COUNT(*) FROM lession WHERE level = %d", level);
-			String query =  String.format("SELECT * FROM lession WHERE level = %d", level);
+			String qCount = String.format("SELECT COUNT(*) FROM lesson WHERE level = %d", level);
+			String query =  String.format("SELECT * FROM lesson WHERE level = %d", level);
 			ResultSet results = state.executeQuery(qCount);
 			
 			results.next();
@@ -46,7 +46,7 @@ public class LessonDB {
 			
 			if(count == 0)
 				return null;
-			lessions = new Lesson[count];
+			lessons = new Lesson[count];
 			
 			results = state.executeQuery(query);
 			
@@ -56,11 +56,11 @@ public class LessonDB {
 				int _id = results.getInt(1);
 				String _name = results.getString(2);
 				int _level = results.getInt(3);
-				Track[] _tracks = TrackDB.getTrackByLessionID(_id);
+				Track[] _tracks = TrackDB.getTrackByLessonID(_id);
+				String _preview = results.getString(4);
+				lesson = new Lesson(_id, _name, _level, _tracks, _preview);
 				
-				lession = new Lesson(_id, _name, _level, _tracks);
-				
-				lessions[i] = lession;
+				lessons[i] = lesson;
 				i++;
 			}
 		} catch (Exception e){
@@ -69,6 +69,6 @@ public class LessonDB {
 			return null;
 		}
 		
-		return lessions;
+		return lessons;
 	}
 }
