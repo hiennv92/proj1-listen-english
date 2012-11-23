@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import model.Lesson;
@@ -33,7 +34,7 @@ public class ListenPanel extends JPanel{
 	private JLabel lblCurrentTime;
 	private JLabel lblTime;
 	private JTextArea suggestArea;
-	private JTextArea inputArea;
+	private JTextField inputArea;
 	private JButton btnRestart;
 	
 	private JButton btnOtherLession;
@@ -78,6 +79,7 @@ public class ListenPanel extends JPanel{
 		init();
 		// chay luong slider cho bai nhac
 		sliderThread = new SliderThread();
+		sliderTrack.setValue(0);
 		// chay luong cap nhat tong thoi gian
 		ttThread = new TotalTimeThread();
 		// cai dat lai la lan chay dau tien
@@ -146,16 +148,19 @@ public class ListenPanel extends JPanel{
 		
 		suggestArea = new JTextArea();
 		suggestArea.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		suggestArea.setFont(new Font("consolas", Font.BOLD, 14));
 		suggestArea.setWrapStyleWord(true);
 		suggestArea.setLineWrap(true);
 		suggestArea.setBounds(10, 162, 578, 84);
 		suggestArea.setEditable(false);
 		add(suggestArea);
 		
-		inputArea = new JTextArea();
+		inputArea = new JTextField();
 		inputArea.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		inputArea.setWrapStyleWord(true);
-		inputArea.setLineWrap(true);
+		//inputArea.setWrapStyleWord(true);
+		//inputArea.setLineWrap(true);
+		inputArea.setFont(new Font("consolas", Font.BOLD, 30));
+		inputArea.setHorizontalAlignment(JTextField.CENTER);
 		inputArea.setBounds(10, 257, 578, 84);
 		inputArea.setEditable(false);
 		inputArea.addKeyListener(new KeyListener() {
