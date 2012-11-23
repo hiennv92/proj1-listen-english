@@ -257,6 +257,8 @@ public class ListenPanel extends JPanel{
 		// dat lai text cho button play
 		playPauseButton.setText("Play");
 		
+		
+		inputArea.setEditable(false);
 		lblCurrentTime.setText("Current time : 0:00:00"); 
 		lblTotalTime.setText("Total Time : 0:00:00");
 		suggestionText.setScriptText(player.getCurrentScript());
