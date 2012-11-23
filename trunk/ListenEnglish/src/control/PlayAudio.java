@@ -153,9 +153,36 @@ public class PlayAudio {
 		return listTrack[currentTrack];
 	}
 	
-	public void setCurrentTrack(int count)
+	public boolean setCurrentTrack(int count)
 	{
-		this.currentTrack = count;
+		// neu ma currentTrack hien dang la phan tu cuoi
+		// thi return false va khong lam gi ca
+		if(count >= listTrack.length - 1)
+			return false;
+		
+		currentTrack = count;
+		
+		// dat lai state
+		state = true;
+		// dung trinh phat nhac cu lai
+		synchronized (mediaPlayer) {
+    		mediaPlayer.stop();
+		}
+		// tao mot trinh phat nhac moi
+		media = new Media((new File(listTrack[currentTrack].getAudioFile())).toURI().toString());
+		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setCycleCount(1000000);
+		
+		Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	synchronized (mediaPlayer) {
+            		mediaPlayer.pause();
+    			}
+            }
+   	 	});
+		
+		return true;
 	}
 	
 	public int getCurrentPosition()

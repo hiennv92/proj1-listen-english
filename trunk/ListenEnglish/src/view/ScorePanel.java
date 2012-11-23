@@ -9,7 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
-import model.DBManager.ListenDB;
+import model.db.ListenDB;
 
 
 public class ScorePanel extends JPanel{

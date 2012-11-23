@@ -1,7 +1,12 @@
 package view;
 
 import java.awt.Font;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -11,15 +16,13 @@ import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
+import model.Lesson;
+import model.db.ConnectDB;
+import model.db.ListenDB;
 import control.AnswerText;
 import control.PlayAudio;
 import control.SuggestionText;
 import control.Utility;
-
-
-import model.Lesson;
-import model.DBManager.ConnectDB;
-import model.DBManager.ListenDB;
 
 public class ListenPanel extends JPanel{
 	private JLabel lessNameLabel;
@@ -31,7 +34,7 @@ public class ListenPanel extends JPanel{
 	private JLabel lblTime;
 	private JTextArea suggestArea;
 	private JTextArea inputArea;
-	private JButton btnExit;
+	private JButton btnRestart;
 	
 	private JButton btnOtherLession;
 	private JLabel lblTotalTime;
@@ -53,6 +56,7 @@ public class ListenPanel extends JPanel{
 	
 	// Thread tong thoi gian
 	TotalTimeThread ttThread;
+	SliderThread sliderThread;
 	
 	public PlayAudio getPlayer() {
 		return player;
@@ -73,7 +77,7 @@ public class ListenPanel extends JPanel{
 		
 		init();
 		// chay luong slider cho bai nhac
-		(new SliderThread()).start();
+		sliderThread = new SliderThread();
 		// chay luong cap nhat tong thoi gian
 		ttThread = new TotalTimeThread();
 		// cai dat lai la lan chay dau tien
@@ -132,7 +136,7 @@ public class ListenPanel extends JPanel{
 		lblVolume.setBounds(436, 127, 46, 14);
 		add(lblVolume);
 		
-		lblCurrentTime = new JLabel("Current time : ");
+		lblCurrentTime = new JLabel("Current time : 0:00:00");
 		lblCurrentTime.setBounds(127, 96, 131, 14);
 		add(lblCurrentTime);
 		
@@ -176,14 +180,14 @@ public class ListenPanel extends JPanel{
 		});
 		add(inputArea);
 		
-		btnExit = new JButton("Exit");
-		btnExit.setBounds(458, 378, 141, 23);
-		btnExit.addActionListener(new ActionListener(){
+		btnRestart = new JButton("Restart");
+		btnRestart.setBounds(399, 378, 141, 23);
+		btnRestart.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				clickExit(e);
+				clickRestart(e);
 			}
 		});
-		//add(btnExit);
+		add(btnRestart);
 		
 		btnOtherLession = new JButton("Back");
 		btnOtherLession.setBounds(250, 378, 131, 23);
@@ -229,9 +233,32 @@ public class ListenPanel extends JPanel{
 		
 	}
 	
-	public void clickExit(ActionEvent e){
-		ConnectDB.closeConnect();
-		System.exit(0);
+	public void clickRestart(ActionEvent e){
+		// dung thread cu va khoi tao thread moi
+		isPlay = false;
+		ttThread = new TotalTimeThread();
+		
+		// tao mot slider thread khac
+		sliderThread = new SliderThread();
+		sliderTrack.setValue(0);
+		
+		// dua ve trang thai lan dau chay
+		firstPlay = true;
+		
+		// dua player ve track dau tien va pause
+		player.setCurrentTrack(0);
+		player.setState(false);
+		
+		// dat lai text cho button play
+		playPauseButton.setText("Play");
+		
+		lblCurrentTime.setText("Current time : 0:00:00"); 
+		lblTotalTime.setText("Total Time : 0:00:00");
+		suggestionText.setScriptText(player.getCurrentScript());
+		suggestionText.setSuggestionText(player.getCurrentSuggestionText());
+		inputArea.setText("");
+		suggestArea.setText("");
+		init();
 	}
 	
 	public void clickPlayPause(ActionEvent e){
@@ -247,6 +274,7 @@ public class ListenPanel extends JPanel{
 		// neu la lan dau tien chay thi chay timer
 		if(firstPlay){
 			ttThread.start();
+			sliderThread.start();
 			inputArea.setEditable(true);
 			firstPlay = false;
 		}
@@ -328,6 +356,7 @@ public class ListenPanel extends JPanel{
 		suggestionText.setSuggestionText(player.getCurrentSuggestionText());
 		inputArea.setText("");
 		suggestArea.setText("");
+		
 		init();
 	}
 	
@@ -364,7 +393,7 @@ public class ListenPanel extends JPanel{
 			while(isPlay){
 				if(player != null){
 					sliderTrack.setValue(player.getCurrentTime());
-					lblCurrentTime.setText(Utility.convertToTime(player.getCurrentTime()/1000));
+					lblCurrentTime.setText("Current time : " + Utility.convertToTime(player.getCurrentTime()/1000));
 				}
 			}
 		}
@@ -372,12 +401,11 @@ public class ListenPanel extends JPanel{
 	
 	public class TotalTimeThread extends Thread{
 		// Thoi gian bat dau
-		long startTime;
+		Long startTime;
 		// Tong thoi gian hien tai, tinh bang miliseconds
 		Integer countTime;
 		public TotalTimeThread(){
 			countTime = 0;
-			
 		}
 		
 		public void run(){
@@ -397,5 +425,12 @@ public class ListenPanel extends JPanel{
 				return countTime;
 			}
 		}
+		
+		public void restart(){
+			synchronized(startTime){
+				startTime = System.currentTimeMillis();
+			}
+		}
+			
 	}
 }
