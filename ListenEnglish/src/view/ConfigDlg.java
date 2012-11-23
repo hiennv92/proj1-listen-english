@@ -207,6 +207,7 @@ public class ConfigDlg extends JDialog {
 			}
 			{
 				this.setSize(438, 371);
+				this.getRootPane().setDefaultButton(butConnect);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
