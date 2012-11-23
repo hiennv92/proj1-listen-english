@@ -360,6 +360,10 @@ public class ListenPanel extends JPanel{
 		// dat lai text cho button play
 		playPauseButton.setText("Play");
 		
+		// dat lai ten bai, level va count
+		lessNameLabel.setText("LESSON : " + player.getLesson().getName() + 
+				  "     LEVEL : " + player.getLesson().getLevel() + 
+				  "     COUNT : " + ListenDB.countLesson(player.getLesson().getID()));
 		
 		inputArea.setEditable(false);
 		lblCurrentTime.setText("Current time : 0:00:00"); 
