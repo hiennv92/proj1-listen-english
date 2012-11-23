@@ -70,7 +70,7 @@ public class ListenPanel extends JPanel{
 		
 		lessNameLabel.setText("LESSON : " + player.getLesson().getName() + 
 							  "     LEVEL : " + player.getLesson().getLevel() + 
-							  "     COUNT : " + ListenDB.countLesson(player.getLesson().getID()));
+							  "     COUNT : " + ListenDB.countLesson(player.getLesson().getID(), mainUI.getCurrentUser().getID()));
 //		aText.setAnswer(player.getCurrentScript());
 		suggestionText.setScriptText(player.getCurrentScript());
 		suggestionText.setSuggestionText(player.getCurrentSuggestionText());
@@ -363,7 +363,7 @@ public class ListenPanel extends JPanel{
 		// dat lai ten bai, level va count
 		lessNameLabel.setText("LESSON : " + player.getLesson().getName() + 
 				  "     LEVEL : " + player.getLesson().getLevel() + 
-				  "     COUNT : " + ListenDB.countLesson(player.getLesson().getID()));
+				  "     COUNT : " + ListenDB.countLesson(player.getLesson().getID(), mainUI.getCurrentUser().getID()));
 		
 		inputArea.setEditable(false);
 		lblCurrentTime.setText("Current time : 0:00:00"); 

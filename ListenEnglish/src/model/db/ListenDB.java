@@ -94,12 +94,12 @@ public class ListenDB {
 
 	}
 	
-	public static int countLesson(int id){
+	public static int countLesson(int id, int userID){
 		int count = 0;
 		try{
 			Statement state = ConnectDB.getConnect().createStatement();
 			
-			String qCount = String.format("SELECT COUNT(*) FROM listen WHERE lessId = %d", id);
+			String qCount = String.format("SELECT COUNT(*) FROM listen WHERE (lessId = %d and userID = %d)", id, userID);
 			
 			ResultSet result = state.executeQuery(qCount);
 			result.next();
