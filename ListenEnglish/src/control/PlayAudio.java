@@ -177,6 +177,7 @@ public class PlayAudio {
             @Override
             public void run() {
             	synchronized (mediaPlayer) {
+            		mediaPlayer.seek(new Duration(0));
             		mediaPlayer.pause();
     			}
             }
