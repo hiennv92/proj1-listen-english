@@ -29,6 +29,7 @@ public class ConnectDB {
 	 * @return
 	 */
 	public static boolean connect() {
+		readConfig();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
