@@ -239,33 +239,7 @@ public class ListenPanel extends JPanel{
 	}
 	
 	public void clickRestart(ActionEvent e){
-		// dung thread cu va khoi tao thread moi
-		isPlay = false;
-		ttThread = new TotalTimeThread();
-		
-		// tao mot slider thread khac
-		sliderThread = new SliderThread();
-		sliderTrack.setValue(0);
-		
-		// dua ve trang thai lan dau chay
-		firstPlay = true;
-		
-		// dua player ve track dau tien va pause
-		player.setCurrentTrack(0);
-		player.setState(false);
-		
-		// dat lai text cho button play
-		playPauseButton.setText("Play");
-		
-		
-		inputArea.setEditable(false);
-		lblCurrentTime.setText("Current time : 0:00:00"); 
-		lblTotalTime.setText("Total Time : 0:00:00");
-		suggestionText.setScriptText(player.getCurrentScript());
-		suggestionText.setSuggestionText(player.getCurrentSuggestionText());
-		inputArea.setText("");
-		suggestArea.setText("");
-		init();
+		restart();
 	}
 	
 	public void clickPlayPause(ActionEvent e){
@@ -343,9 +317,7 @@ public class ListenPanel extends JPanel{
 			mainUI.getScorePanel().refreshScore();
 			if (n == 0)
 			{
-				sliderTrack.setValue(0);
-				player.setCurrentTrack(-1);
-				player.next();
+				restart();
 			}
 			else
 			{
@@ -364,6 +336,36 @@ public class ListenPanel extends JPanel{
 		inputArea.setText("");
 		suggestArea.setText("");
 		
+		init();
+	}
+	
+	public void restart(){
+		// dung thread cu va khoi tao thread moi
+		isPlay = false;
+		ttThread = new TotalTimeThread();
+		
+		// tao mot slider thread khac
+		sliderThread = new SliderThread();
+		sliderTrack.setValue(0);
+		
+		// dua ve trang thai lan dau chay
+		firstPlay = true;
+		
+		// dua player ve track dau tien va pause
+		player.setCurrentTrack(0);
+		player.setState(false);
+		
+		// dat lai text cho button play
+		playPauseButton.setText("Play");
+		
+		
+		inputArea.setEditable(false);
+		lblCurrentTime.setText("Current time : 0:00:00"); 
+		lblTotalTime.setText("Total Time : 0:00:00");
+		suggestionText.setScriptText(player.getCurrentScript());
+		suggestionText.setSuggestionText(player.getCurrentSuggestionText());
+		inputArea.setText("");
+		suggestArea.setText("");
 		init();
 	}
 	
