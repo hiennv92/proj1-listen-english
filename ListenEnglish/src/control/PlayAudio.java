@@ -157,7 +157,7 @@ public class PlayAudio {
 	{
 		// neu ma currentTrack hien dang la phan tu cuoi
 		// thi return false va khong lam gi ca
-		if(count >= listTrack.length - 1)
+		if(count > listTrack.length - 1)
 			return false;
 		
 		currentTrack = count;
