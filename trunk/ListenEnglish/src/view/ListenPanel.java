@@ -36,8 +36,6 @@ public class ListenPanel extends JPanel{
 	private JTextArea suggestArea;
 	private JTextField inputArea;
 	private JButton btnRestart;
-	//private JLabel lblLevel;	// level cua bai nghe
-	private JLabel lblCount;	// so luot da nghe cua bai nay
 	
 	private JButton btnOtherLession;
 	private JLabel lblTotalTime;
