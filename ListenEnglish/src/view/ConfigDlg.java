@@ -2,14 +2,12 @@
  * Dialog cho phep cau hinh viec ket noi den co so du lieu
  */
 package view;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
-
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -24,10 +22,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import model.db.ConnectDB;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import model.DBManager.ConnectDB;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo

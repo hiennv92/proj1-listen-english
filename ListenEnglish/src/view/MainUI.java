@@ -9,8 +9,7 @@ import javax.swing.UIManager;
 
 import model.Lesson;
 import model.User;
-import model.DBManager.ConnectDB;
-import model.DBManager.LessonDB;
+import model.db.LessonDB;
 
 public class MainUI extends JFrame {
 	private User currentUser;
