@@ -36,6 +36,8 @@ public class ListenPanel extends JPanel{
 	private JTextArea suggestArea;
 	private JTextField inputArea;
 	private JButton btnRestart;
+	//private JLabel lblLevel;	// level cua bai nghe
+	private JLabel lblCount;	// so luot da nghe cua bai nay
 	
 	private JButton btnOtherLession;
 	private JLabel lblTotalTime;
@@ -68,7 +70,9 @@ public class ListenPanel extends JPanel{
 		currentLesson = player.getLesson();
 		currentTrackOrder = 0;
 		
-		lessNameLabel.setText("LESSON : " + player.getLesson().getName());
+		lessNameLabel.setText("LESSON : " + player.getLesson().getName() + 
+							  "     LEVEL : " + player.getLesson().getLevel() + 
+							  "     COUNT : " + ListenDB.countLesson(player.getLesson().getID()));
 //		aText.setAnswer(player.getCurrentScript());
 		suggestionText.setScriptText(player.getCurrentScript());
 		suggestionText.setSuggestionText(player.getCurrentSuggestionText());
