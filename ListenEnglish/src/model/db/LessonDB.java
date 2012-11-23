@@ -64,7 +64,7 @@ public class LessonDB {
 				i++;
 			}
 		} catch (Exception e){
-			e.printStackTrace();
+			
 			// return null
 			return null;
 		}
