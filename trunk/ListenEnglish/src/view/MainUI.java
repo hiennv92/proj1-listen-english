@@ -60,6 +60,7 @@ public class MainUI extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(650, 500);
 		setResizable(false);
+		setLocationRelativeTo(null);
 	}
 
 	public User getCurrentUser() {
