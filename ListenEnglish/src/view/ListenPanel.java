@@ -415,6 +415,10 @@ public class ListenPanel extends JPanel {
 		// dua player ve track dau tien va pause
 		player.setCurrentTrack(0);
 		player.setState(false);
+		player.setStateFull(false);
+		sliderFullLesson.setValue(0);
+		lblCurrentTimeFull.setText("0:00:00");
+		playPauseBtFull.setText("Play");
 
 		// dat lai text cho button play
 		playPauseButton.setText("Play");
@@ -468,7 +472,6 @@ public class ListenPanel extends JPanel {
 			playPauseBtFull.setText("Stop");
 			inputArea.setEditable(false);
 			playPauseButton.setText("Play");
-			sliderTrack.setValue(0);
 			isPlay = true;
 			sliderThreadFull.start();
 		} else {
