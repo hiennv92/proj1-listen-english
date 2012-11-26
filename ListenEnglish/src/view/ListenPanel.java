@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import model.Lesson;
-import model.db.ConnectDB;
 import model.db.ListenDB;
 import control.AnswerText;
 import control.PlayAudio;
@@ -57,6 +56,7 @@ public class ListenPanel extends JPanel {
 	private PlayAudio player = null;
 	// trang thai cua trinh phat nhac co chay hay khong
 	private boolean isPlay;
+	private boolean timePlay;
 	// kiem tra lan dau tien click
 	private boolean firstPlay = true;
 
@@ -302,7 +302,7 @@ public class ListenPanel extends JPanel {
 			sliderFullLesson.setValue(0);
 			isPlay = true;
 			sliderThread.start();
-		} else{
+		} else {
 			playPauseButton.setText("Play");
 		}
 		// neu la lan dau tien chay thi chay timer
@@ -340,6 +340,7 @@ public class ListenPanel extends JPanel {
 
 	public void init() {
 		isPlay = true;
+		timePlay = true;
 		sliderTrack.setMaximum(player.getCurrentTrack().getLength());
 		trackNameLabel.setText("TRACK : " + player.getCurrentPosition() + " / "
 				+ player.getNumberOfTracks());
@@ -352,6 +353,7 @@ public class ListenPanel extends JPanel {
 		if (currentTrackOrder >= currentLesson.getTrack().length) {
 			// dung chuong trinh nghe nhac lai
 			isPlay = false;
+			timePlay = false;
 			player.stop();
 			// tinh diem
 			int score = Utility.calScore(ttThread.getTime() / 1000,
@@ -393,6 +395,7 @@ public class ListenPanel extends JPanel {
 	public void restart() {
 		// dung thread cu va khoi tao thread moi
 		isPlay = false;
+		timePlay = true;
 		ttThread = new TotalTimeThread();
 
 		// tao mot slider thread khac
@@ -457,7 +460,7 @@ public class ListenPanel extends JPanel {
 		if (player.getStateFull()) {
 			sliderThreadFull = new SliderThread();
 			sliderThreadFull.setIsFull(true);
-			playPauseBtFull.setText("Pause");
+			playPauseBtFull.setText("Stop");
 			inputArea.setEditable(false);
 			playPauseButton.setText("Play");
 			sliderTrack.setValue(0);
@@ -480,27 +483,35 @@ public class ListenPanel extends JPanel {
 			while (isPlay) {
 				if (player != null) {
 					if (!this.isFull) {
-						if (player.getState())
-						{
-							sliderFullLesson.setValue(player
-									.getCurrentTotalTimePlaying());
-							lblCurrentTimeFull.setText(Utility.convertToTime(player
-									.getCurrentTotalTimePlaying() / 1000));
-							sliderTrack.setValue(player.getCurrentTime(isFull));
-							lblCurrentTime.setText(Utility.convertToTime(player
-									.getCurrentTime(isFull) / 1000));
+						if (player.getState()) {
+							synchronized (sliderFullLesson) 
+							{
+								sliderFullLesson.setValue(player
+										.getCurrentTotalTimePlaying());
+								lblCurrentTimeFull
+										.setText(Utility.convertToTime(player
+												.getCurrentTotalTimePlaying() / 1000));
+							}
+							synchronized (sliderTrack) 
+							{
+								sliderTrack.setValue(player
+										.getCurrentTime(isFull));
+								lblCurrentTime
+										.setText(Utility.convertToTime(player
+												.getCurrentTime(isFull) / 1000));
+							}
 						}
-					} 
-					else if(player.getStateFull())
-					{
-						sliderFullLesson.setValue(player
-								.getCurrentTime(true));
-						lblCurrentTimeFull.setText(Utility.convertToTime(player
-								.getCurrentTime(true) / 1000));
+					} else if (player.getStateFull()) {
+						synchronized (sliderFullLesson) {
+							sliderFullLesson.setValue(player
+									.getCurrentTime(true));
+							lblCurrentTimeFull
+									.setText(Utility.convertToTime(player
+											.getCurrentTime(true) / 1000));
+						}
 					}
 				}
 			}
-			System.out.println("stop");
 		}
 	}
 
@@ -517,7 +528,7 @@ public class ListenPanel extends JPanel {
 		public void run() {
 			startTime = System.currentTimeMillis();
 
-			while (isPlay) {
+			while (timePlay) {
 				synchronized (countTime) {
 					countTime = (int) (System.currentTimeMillis() - startTime);
 				}

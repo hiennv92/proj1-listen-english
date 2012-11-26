@@ -26,12 +26,12 @@ public class PlayAudio {
 	Media media;
 	MediaPlayer mediaPlayerFull;
 	Media mediaFull;
-	int currentTrack; // So thu tu cua Track hien dang phat
+	Integer currentTrack; // So thu tu cua Track hien dang phat
 	boolean state; // trang thai cua trinh phat nhac
 					// true neu dang phat
 					// false neu dang pause
 	boolean stateFull;
-	int countTrack; // So thu tu cua track dang phat trong che do full lesson
+	Integer countTrack; // So thu tu cua track dang phat trong che do full lesson
 
 	public PlayAudio(Lesson les) {
 		this.lesson = les;
@@ -109,13 +109,11 @@ public class PlayAudio {
 	}
 
 	public void playFullLesson() {
-		if (getState())
-		{
+		if (getState()) {
 			state = false;
 			stop();
 		}
-		// Khoi tao moi truong
-		final JFXPanel fxPanel = new JFXPanel();
+
 		stateFull = true;
 		countTrack = 0;
 		playTrackInFullLesson();
@@ -124,6 +122,8 @@ public class PlayAudio {
 	private void playTrackInFullLesson() {
 		if (countTrack >= listTrack.length)
 			return;
+		// Khoi tao moi truong
+		final JFXPanel fxPanel = new JFXPanel();
 		mediaFull = new Media((new File(listTrack[countTrack].getAudioFile()))
 				.toURI().toString());
 		mediaPlayerFull = new MediaPlayer(mediaFull);
@@ -132,10 +132,10 @@ public class PlayAudio {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				synchronized (mediaPlayerFull) {
-					countTrack++;
-					playTrackInFullLesson();
-				}
+				 synchronized (countTrack) {
+				countTrack++;
+				playTrackInFullLesson();
+				 }
 			}
 		});
 
@@ -297,7 +297,7 @@ public class PlayAudio {
 		Duration current = null;
 		int bonus = 0;
 		MediaPlayer mp = mediaPlayer;
-		if (isFull){
+		if (isFull) {
 			mp = mediaPlayerFull;
 			bonus += getCurrentTotalTime();
 		}
@@ -307,26 +307,21 @@ public class PlayAudio {
 
 		return (int) current.toMillis() + bonus;
 	}
-	
-	public int getCurrentTotalTimePlaying()
-	{
+
+	public int getCurrentTotalTimePlaying() {
 		int time = 0;
-		for (int i = 0; i < currentTrack; ++i)
-		{
+		for (int i = 0; i < currentTrack; ++i) {
 			time += listTrack[i].getLength();
 		}
-		if (state)
-		{
+		if (state) {
 			time += mediaPlayer.getCurrentTime().toMillis();
 		}
 		return time;
 	}
-	
-	private int getCurrentTotalTime()
-	{
+
+	private int getCurrentTotalTime() {
 		int time = 0;
-		for (int i = 0; i < countTrack; ++i)
-		{
+		for (int i = 0; i < countTrack; ++i) {
 			time += listTrack[i].getLength();
 		}
 		return time;
