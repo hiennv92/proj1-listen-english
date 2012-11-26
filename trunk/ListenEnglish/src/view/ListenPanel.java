@@ -91,7 +91,7 @@ public class ListenPanel extends JPanel {
 		sliderThread.setIsFull(false);
 		sliderTrack.setValue(0);
 		sliderFullLesson.setValue(0);
-		playPauseBtFull.setText("Play");
+		playPauseBtFull.setText("Play All");
 		// chay luong cap nhat tong thoi gian
 		ttThread = new TotalTimeThread();
 		// cai dat lai la lan chay dau tien
@@ -257,7 +257,7 @@ public class ListenPanel extends JPanel {
 		});
 		add(playPauseButton);
 
-		playPauseBtFull = new JButton("Play");
+		playPauseBtFull = new JButton("Play All");
 		playPauseBtFull.setBounds(0, 55, 100, 30);
 		playPauseBtFull.addActionListener(new ActionListener() {
 
@@ -298,7 +298,7 @@ public class ListenPanel extends JPanel {
 			playPauseButton.setText("Pause");
 			inputArea.requestFocus();
 			player.setStateFull(false);
-			playPauseBtFull.setText("Play");
+			playPauseBtFull.setText("Play All");
 			sliderFullLesson.setValue(0);
 			isPlay = true;
 			sliderThread.start();
@@ -418,7 +418,7 @@ public class ListenPanel extends JPanel {
 		player.setStateFull(false);
 		sliderFullLesson.setValue(0);
 		lblCurrentTimeFull.setText("0:00:00");
-		playPauseBtFull.setText("Play");
+		playPauseBtFull.setText("Play All");
 
 		// dat lai text cho button play
 		playPauseButton.setText("Play");
@@ -475,7 +475,7 @@ public class ListenPanel extends JPanel {
 			isPlay = true;
 			sliderThreadFull.start();
 		} else {
-			playPauseBtFull.setText("Play");
+			playPauseBtFull.setText("Play All");
 			sliderFullLesson.setValue(0);
 		}
 	}

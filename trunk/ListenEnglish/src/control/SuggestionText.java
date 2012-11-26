@@ -37,7 +37,6 @@ public class SuggestionText {
 	{
 		reset();
 		this.scriptText = scriptText;
-		System.out.println(scriptText);
 	}
 	
 	public int checkChar(char c)

@@ -35,7 +35,7 @@ public class ConnectDB {
 			String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			//System.out.println(e.getMessage());
 			return false;
 		}
 
@@ -47,7 +47,7 @@ public class ConnectDB {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				return false;
 			}
 		}
@@ -132,7 +132,7 @@ public class ConnectDB {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

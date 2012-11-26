@@ -23,7 +23,7 @@ public class TrackDB {
 				track = new Track(_id, _length, _audioFile, _scriptFile, _suggest);
 			}
 		} catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			// return null
 			return track;
 		}
@@ -67,7 +67,7 @@ public class TrackDB {
 			
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		return tracks;

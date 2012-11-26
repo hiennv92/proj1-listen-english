@@ -24,7 +24,7 @@ public class LessonDB {
 				lesson = new Lesson(_id, _name, _level, _tracks, _preview);
 			}
 		} catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			// return null
 			return null;
 		}

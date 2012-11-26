@@ -22,7 +22,7 @@ public class UserDB {
 				user = new User(_id, _password, _username);
 			}
 		} catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			// return null
 			return user;
 		}
@@ -46,7 +46,7 @@ public class UserDB {
 				user = new User(_id, _password, _username);
 			}
 		} catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			// return null
 			return user;
 		}
@@ -67,7 +67,7 @@ public class UserDB {
 			
 			ok = num > 0 ? true : false;
 		} catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			
 		}
 		
@@ -88,7 +88,7 @@ public class UserDB {
 			
 			ok = num > 0 ? true : false;
 		} catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		return ok;

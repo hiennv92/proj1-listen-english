@@ -9,8 +9,6 @@ public class Utility {
 	}
 	
 	public static int calScore(int totalTime, int defaultTime){
-		System.out.println("Total : " + totalTime);
-		System.out.println("default : " + defaultTime);
 		int score = (int) (10 * (11 - totalTime * 1.0 / defaultTime));
 		return score;// > 0 ? score : 0;
 	}

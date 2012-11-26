@@ -72,7 +72,7 @@ public class ConfigDlg extends JDialog {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -225,7 +225,7 @@ public class ConfigDlg extends JDialog {
 				this.setSize(500, 350);
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	} // ket thuc phuong thuc initGUI()
 	
@@ -276,9 +276,9 @@ public class ConfigDlg extends JDialog {
             transformer.transform(source, result);
 
         } catch (TransformerException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
         } catch (ParserConfigurationException ex) {
-            ex.printStackTrace();
+           // ex.printStackTrace();
         }
 
     }
