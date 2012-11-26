@@ -50,7 +50,7 @@ public class ScorePanel extends JPanel{
 		listScrollPaneUser.setBounds(10, 49, 300, 374);
 		add(listScrollPaneUser);
 		
-		lblUserScore = new JLabel("User score");
+		lblUserScore = new JLabel("Your score");
 		lblUserScore.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUserScore.setBounds(103, 24, 82, 14);
 		add(lblUserScore);

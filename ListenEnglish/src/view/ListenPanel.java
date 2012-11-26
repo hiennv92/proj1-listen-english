@@ -76,7 +76,7 @@ public class ListenPanel extends JPanel {
 
 		lessNameLabel.setText("LESSON : " + player.getLesson().getName()
 				+ "     LEVEL : " + player.getLesson().getLevel()
-				+ "     COUNT : "
+				+ "     LISTEN : "
 				+ ListenDB.countLesson(player.getLesson().getID()));
 		// aText.setAnswer(player.getCurrentScript());
 		suggestionText.setScriptText(player.getCurrentScript());
@@ -126,7 +126,7 @@ public class ListenPanel extends JPanel {
 		add(trackNameLabel);
 
 		sliderTrack = new JSlider();
-		sliderTrack.setBounds(150, 91, 360, 24);
+		sliderTrack.setBounds(160, 91, 360, 24);
 		sliderTrack.addMouseMotionListener(new MouseMotionListener() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
@@ -141,7 +141,7 @@ public class ListenPanel extends JPanel {
 
 		//
 		sliderFullLesson = new JSlider();
-		sliderFullLesson.setBounds(150, 56, 360, 24);
+		sliderFullLesson.setBounds(160, 53, 360, 24);
 		add(sliderFullLesson);
 
 		sliderVolume = new JSlider();
@@ -167,7 +167,7 @@ public class ListenPanel extends JPanel {
 		add(lblCurrentTime);
 
 		lblTime = new JLabel("Time : ");
-		lblTime.setBounds(515, 96, 96, 14);
+		lblTime.setBounds(525, 96, 96, 14);
 		add(lblTime);
 
 		lblCurrentTimeFull = new JLabel("0:00:00");
@@ -175,7 +175,7 @@ public class ListenPanel extends JPanel {
 		add(lblCurrentTimeFull);
 
 		lblTotalTimeFull = new JLabel("");
-		lblTotalTimeFull.setBounds(515, 56, 131, 14);
+		lblTotalTimeFull.setBounds(525, 56, 131, 14);
 		add(lblTotalTimeFull);
 
 		suggestArea = new JTextArea();
@@ -426,7 +426,7 @@ public class ListenPanel extends JPanel {
 		// dat lai ten bai, level va count
 		lessNameLabel.setText("LESSON : " + player.getLesson().getName()
 				+ "     LEVEL : " + player.getLesson().getLevel()
-				+ "     COUNT : "
+				+ "     LISTEN : "
 				+ ListenDB.countLesson(player.getLesson().getID()));
 
 		inputArea.setEditable(false);
