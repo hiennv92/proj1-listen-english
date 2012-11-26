@@ -518,6 +518,11 @@ public class ListenPanel extends JPanel {
 											.getCurrentTime(true) / 1000));
 						}
 					}
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -542,6 +547,11 @@ public class ListenPanel extends JPanel {
 				}
 				String timeS = Utility.convertToTime(countTime / 1000);
 				lblTotalTime.setText("Total Time : " + timeS);
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
