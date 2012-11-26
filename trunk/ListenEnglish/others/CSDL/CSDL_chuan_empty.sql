@@ -2,13 +2,13 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-CREATE SCHEMA IF NOT EXISTS `listeningenglish` DEFAULT CHARACTER SET latin1 ;
-USE `listeningenglish` ;
+CREATE SCHEMA IF NOT EXISTS `listenenglish` DEFAULT CHARACTER SET latin1 ;
+USE `listenenglish` ;
 
 -- -----------------------------------------------------
--- Table `listeningenglish`.`lesson`
+-- Table `listenenglish`.`lesson`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `listeningenglish`.`lesson` (
+CREATE  TABLE IF NOT EXISTS `listenenglish`.`lesson` (
   `id` INT(11) NOT NULL ,
   `name` VARCHAR(255) NULL DEFAULT NULL ,
   `level` TINYINT(4) NULL DEFAULT NULL ,
@@ -19,9 +19,9 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `listeningenglish`.`user`
+-- Table `listenenglish`.`user`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `listeningenglish`.`user` (
+CREATE  TABLE IF NOT EXISTS `listenenglish`.`user` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `password` VARCHAR(32) NULL DEFAULT NULL ,
   `username` VARCHAR(32) NULL DEFAULT NULL ,
@@ -32,9 +32,9 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `listeningenglish`.`listen`
+-- Table `listenenglish`.`listen`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `listeningenglish`.`listen` (
+CREATE  TABLE IF NOT EXISTS `listenenglish`.`listen` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `userID` INT(11) NOT NULL ,
   `lessID` INT(11) NOT NULL ,
@@ -45,12 +45,12 @@ CREATE  TABLE IF NOT EXISTS `listeningenglish`.`listen` (
   INDEX `fk_User_has_Lession_User_idx` (`userID` ASC) ,
   CONSTRAINT `fk_User_has_Lession_Lession1`
     FOREIGN KEY (`lessID` )
-    REFERENCES `listeningenglish`.`lesson` (`id` )
+    REFERENCES `listenenglish`.`lesson` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_Lession_User`
     FOREIGN KEY (`userID` )
-    REFERENCES `listeningenglish`.`user` (`id` )
+    REFERENCES `listenenglish`.`user` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -59,9 +59,9 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `listeningenglish`.`track`
+-- Table `listenenglish`.`track`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `listeningenglish`.`track` (
+CREATE  TABLE IF NOT EXISTS `listenenglish`.`track` (
   `id` INT(11) NOT NULL ,
   `length` INT(11) NULL DEFAULT NULL ,
   `audioFile` VARCHAR(255) NULL DEFAULT NULL ,
@@ -72,7 +72,7 @@ CREATE  TABLE IF NOT EXISTS `listeningenglish`.`track` (
   INDEX `fk_track_lesson1` (`lessID` ASC) ,
   CONSTRAINT `fk_track_lesson1`
     FOREIGN KEY (`lessID` )
-    REFERENCES `listeningenglish`.`lesson` (`id` )
+    REFERENCES `listenenglish`.`lesson` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
