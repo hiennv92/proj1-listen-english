@@ -3,7 +3,6 @@ package model.db;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import model.Track;
 import model.User;
 
 public class UserDB {
