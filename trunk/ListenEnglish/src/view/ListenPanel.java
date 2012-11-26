@@ -317,6 +317,11 @@ public class ListenPanel extends JPanel {
 
 	public void clickOtherLession(ActionEvent e) {
 		isPlay = false;
+		timePlay = false;
+		sliderFullLesson.setValue(0);
+		sliderTrack.setValue(0);
+		lblCurrentTime.setText("0:00:00");
+		lblCurrentTimeFull.setText("0:00:00");
 		synchronized (player) {
 			player.setStateFull(false);
 			player.stop();
@@ -395,7 +400,7 @@ public class ListenPanel extends JPanel {
 	public void restart() {
 		// dung thread cu va khoi tao thread moi
 		isPlay = false;
-		timePlay = true;
+		timePlay = false;
 		ttThread = new TotalTimeThread();
 
 		// tao mot slider thread khac
